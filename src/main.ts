@@ -1,9 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import Store from './store'
+import store from './store'
+import router from './router'
 // 雪碧图
 import 'virtual:svg-icons-register'
 
 const app = createApp(App)
-app.use(Store)
+app.use(store)
+app.use(router)
 app.mount('#app')
