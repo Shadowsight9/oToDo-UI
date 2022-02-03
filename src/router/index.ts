@@ -2,9 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // 引入组件
 import Login from '@/views/login/index.vue'
+import Main from '@/views/main/index.vue'
 
 //配置路由映射关系
 const routes = [
+  {
+    path: '/',
+    component: Main,
+  },
   {
     path: '/login',
     component: Login,

@@ -4,7 +4,7 @@ import LoginIndex from '@/views/login/index.vue'
 </script>
 
 <template>
-  <Main></Main>
+  <router-view></router-view>
 </template>
 
 <style>
