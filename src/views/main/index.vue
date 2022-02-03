@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import LeftMenu from './left-menu/LeftMenu.vue'
-import MainBoard from './main-board/MainBoard.vue'
+import NavMenu from '@/components/NavMenu.vue'
+import MainBoard from '@/components/MainBoard.vue'
 </script>
 <template>
-  <LeftMenu></LeftMenu>
+  <NavMenu></NavMenu>
   <MainBoard></MainBoard>
   <div class="suggestions">[suggestions]</div>
 </template>
