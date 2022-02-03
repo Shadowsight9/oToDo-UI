@@ -1,21 +1,40 @@
 <script setup lang="ts">
 import oToDoLogo from '@/assets/images/oToDo-logo.jpg'
 import LoggingIn from '@/assets/images/logging-in.gif'
-import { ref, reactive } from 'vue'
+import { ref, reactive, toRefs } from 'vue'
 
 const isLogin = ref(true)
 const isLoading = ref(false)
 
-const loginForm = reactive({
-  username: '',
-  password: '',
+interface FromItem {
+  val: string
+  isValid: boolean
+}
+interface LoginFrom {
+  username: FromItem
+  password: FromItem
+}
+const loginForm: LoginFrom = reactive({
+  username: { val: '', isValid: true },
+  password: { val: '', isValid: true },
 })
+
+const { username, password } = toRefs(loginForm)
 
 const changeMode = () => {
   isLogin.value = !isLogin.value
 }
 const handleLogin = async () => {
   isLoading.value = true
+  for (const [k, v] of Object.entries(loginForm)) {
+    v.isValid = true
+    if (v.val === '') {
+      v.isValid = false
+      isLoading.value = false
+      return
+    }
+  }
+  // TODO: add login api
   setTimeout(() => {
     isLoading.value = false
   }, 1500)
@@ -33,22 +52,22 @@ const handleLogin = async () => {
       <img class="img-logo" :src="oToDoLogo" alt="oToDo-logo" />
       <h1>oToDo Login</h1>
       <div class="input-group">
-        <div class="group-row">
+        <div class="group-row" :class="{ 'group-wearning': !username.isValid }">
           <p>请输入有效的电子邮件地址、电话号码或 Skype 用户名</p>
           <input
             id="username"
-            v-model="loginForm.username"
+            v-model="username.val"
             type="text"
             name="username"
             :disabled="isLoading"
             placeholder="用户名、电子邮件、电话或 Skype"
           />
         </div>
-        <div class="group-row group-wearning">
+        <div class="group-row" :class="{ 'group-wearning': !password.isValid }">
           <p>请输入有效的密码</p>
           <input
             id="password"
-            v-model="loginForm.password"
+            v-model="password.val"
             type="password"
             name="password"
             :disabled="isLoading"
