@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SvgIcon from '../SvgIcon.vue'
+import SvgIcon from './SvgIcon.vue'
 </script>
 <template>
   <div class="main-board">
@@ -30,7 +30,7 @@ import SvgIcon from '../SvgIcon.vue'
 </template>
 <style lang="scss">
 .main-board {
-  background-image: url(../../assets/background-image.jpg);
+  background-image: url('@/assets/images/background-image.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 8px;

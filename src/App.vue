@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import TodoApp from './components/TodoApp.vue'
+import Main from '@/views/main/index.vue'
 import LoginIndex from '@/views/login/index.vue'
 </script>
 
 <template>
-  <LoginIndex></LoginIndex>
+  <Main></Main>
 </template>
 
 <style>
