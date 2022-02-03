@@ -3,7 +3,7 @@ import path from 'path'
 
 export default function createSvgIcon(isBuild) {
   return svgIcon({
-    iconDirs: [path.resolve(process.cwd(), 'src/assets/icons/svg')],
+    iconDirs: [path.resolve(process.cwd(), 'src/icons')],
     symbolId: 'icon-[dir]-[name]',
     svgoOptions: isBuild,
   })
