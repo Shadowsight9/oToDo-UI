@@ -36,6 +36,5 @@ export const login = (userName: string, password: string) => {
       } = responseBody
       localStorage.setItem('ACCESS_TOKEN', accessToken)
       localStorage.setItem('REFRESH_TOKEN', refreshToken)
-      user.setToken(accessToken)
     })
 }

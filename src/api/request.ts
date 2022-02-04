@@ -13,7 +13,7 @@ export class Request {
   public static init() {
     // 创建axios实例
     this.axiosInstance = axios.create({
-      baseURL: import.meta.env.VITE_GLOB_API_URL as string,
+      baseURL: '/api',
       timeout: 10000,
     })
 
