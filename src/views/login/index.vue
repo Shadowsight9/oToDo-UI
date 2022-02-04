@@ -41,7 +41,6 @@ const handleLogin = async () => {
   try {
     await login(username.value.val, password.value.val)
   } catch (error) {
-    debugger
     console.error(error)
     isLoading.value = false
     return

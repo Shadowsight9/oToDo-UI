@@ -1,16 +1,14 @@
 import request from '@/api/index'
-import appStore from '@/store'
-
-const user = appStore.useUserStore
+import { useUserStore } from '@/store/userStore'
 
 /**
  * 是否为登录状态
  */
 export const isLogin = (): boolean => {
-  if (user.token) return true
+  if (useUserStore().token) return true
 
   const token = localStorage.getItem('ACCESS_TOKEN')
-  user.setToken(token || '')
+  useUserStore().setToken(token || '')
   return !!token
 }
 
@@ -36,5 +34,6 @@ export const login = (userName: string, password: string) => {
       } = responseBody
       localStorage.setItem('ACCESS_TOKEN', accessToken)
       localStorage.setItem('REFRESH_TOKEN', refreshToken)
+      useUserStore().setToken(accessToken)
     })
 }
