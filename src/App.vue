@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import Main from '@/views/main/index.vue'
-import LoginIndex from '@/views/login/index.vue'
-</script>
-
 <template>
   <router-view></router-view>
 </template>
