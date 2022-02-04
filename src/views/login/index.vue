@@ -3,6 +3,7 @@ import oToDoLogo from '@/assets/images/oToDo-logo.jpg'
 import LoggingIn from '@/assets/images/logging-in.gif'
 import { ref, reactive, toRefs } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { login } from '@/utils/userLogin'
 
 const router = useRouter()
 const isLogin = ref(true)
@@ -37,10 +38,13 @@ const handleLogin = async () => {
     }
   }
   // TODO: add login api
-  setTimeout(() => {
-    isLoading.value = false
-    router.push('/')
-  }, 1500)
+  const result = await login(username.value.val, password.value.val)
+  console.log(result)
+
+  // setTimeout(() => {
+  //   isLoading.value = false
+  //   router.push('/')
+  // }, 1500)
 }
 </script>
 <template>

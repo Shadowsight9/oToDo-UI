@@ -8,7 +8,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd()
   const env = loadEnv(mode, root)
 
-  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY } = env
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY_URL } = env
 
   return {
     base: VITE_PUBLIC_PATH,
@@ -27,7 +27,13 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       host: true,
       port: Number(VITE_PORT),
       // Load proxy configuration from .env
-      // proxy: createProxy(VITE_PROXY),
+      proxy: {
+        '/api': {
+          target: VITE_PROXY_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
     },
     plugins: [
       vue(),
