@@ -3,7 +3,7 @@ import { IRequestParams } from '@/types/request'
 import { TUser } from '@/types/user'
 
 export default {
-  userAuthority: (options?: IRequestParams): Promise<{ token: string }> =>
+  userAuthority: (options?: IRequestParams): Promise<any> =>
     Request.axiosInstance({
       url: '/session',
       method: 'post',

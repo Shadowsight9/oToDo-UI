@@ -37,14 +37,14 @@ const handleLogin = async () => {
       return
     }
   }
-  // TODO: add login api
-  const result = await login(username.value.val, password.value.val)
-  console.log(result)
 
-  // setTimeout(() => {
-  //   isLoading.value = false
-  //   router.push('/')
-  // }, 1500)
+  try {
+    await login(username.value.val, password.value.val)
+  } catch (error) {
+    console.error(error)
+    isLoading.value = false
+  }
+  router.push('/')
 }
 </script>
 <template>

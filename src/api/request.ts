@@ -48,13 +48,10 @@ export class Request {
     this.axiosInstance.interceptors.response.use(
       // 请求成功
       (response: IRequestResponse): TBackData => {
-        const {
-          data: { code, message, data },
-        } = response
-        if (response.status !== 200 || code !== 0) {
-          Request.errorHandle(response, message)
+        if (response.status !== 200) {
+          Request.errorHandle(response)
         }
-        return data
+        return response.data
       },
       // 请求失败
       (error: AxiosError): Promise<any> => {

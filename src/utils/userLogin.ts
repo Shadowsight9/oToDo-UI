@@ -27,12 +27,15 @@ export const login = (userName: string, password: string) => {
         password: password,
       },
     })
-    .then((data) => {
-      const { token } = data
-      if (token) {
-        localStorage.setItem('ACCESS_TOKEN', token)
-        user.setToken(token)
-      }
-      return data
+    .then((responseBody) => {
+      const {
+        access_token: accessToken,
+        token_type: tokenType,
+        expires_in: expiresIn,
+        refresh_token: refreshToken,
+      } = responseBody
+      localStorage.setItem('ACCESS_TOKEN', accessToken)
+      localStorage.setItem('REFRESH_TOKEN', refreshToken)
+      user.setToken(accessToken)
     })
 }
