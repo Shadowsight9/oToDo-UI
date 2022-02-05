@@ -36,15 +36,8 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build packages
-        run: |
-          yarn copy
-          yarn build
-
       - name: Build website
-        env:
-          BASE_PATH: /
-        run: yarn blog:build
+        run: yarn build
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2.2.0
