@@ -9,6 +9,7 @@ const setAccessToken = (token: string, maxAge: number): void => {
 const setRefreshToken = (token: string): void => {
   localStorage.setItem('REFRESH_TOKEN', token)
 }
+
 const getAccessToken = (): string | null => {
   if (cookie.getCookie('ACCESS_TOKEN') !== null) {
     return localStorage.getItem('ACCESS_TOKEN')
@@ -16,8 +17,15 @@ const getAccessToken = (): string | null => {
     return null
   }
 }
+
 const getRefreshToken = (): string | null => {
   return localStorage.getItem('REFRESH_TOKEN')
+}
+
+const removeAllToken = () => {
+  cookie.clearCookie('ACCESS_TOKEN')
+  localStorage.removeItem('ACCESS_TOKEN')
+  localStorage.removeItem('REFRESH_TOKEN')
 }
 
 export default {
@@ -25,4 +33,5 @@ export default {
   setRefreshToken,
   getAccessToken,
   getRefreshToken,
+  removeAllToken,
 }

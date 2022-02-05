@@ -67,6 +67,7 @@ export const logout = async (): Promise<boolean> => {
     await deleteSession({
       data: { refresh_token: refreshToken },
     })
+    token.removeAllToken()
     return true
   } catch (err) {
     return false
