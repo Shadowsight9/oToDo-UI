@@ -1,23 +1,24 @@
-import { Request } from './request'
-import { IRequestParams } from '@/types/request'
-import { TUser } from '@/types/user'
+import authentication from './authentication'
+import { useUserStore } from '@/store/userStore'
+import { TLoginResponse } from '@/types/session'
 
-export default {
-  userAuthority: (options?: IRequestParams): Promise<any> =>
-    Request.axiosInstance({
-      url: '/session',
-      method: 'post',
-      desc: '获取Token',
-      isJSON: true,
-      ...options,
-    }),
-
-  userInfo: (options?: IRequestParams): Promise<TUser> =>
-    Request.axiosInstance({
-      url: '/userInfo',
-      method: 'post',
-      desc: '获取用户信息',
-      isJSON: true,
-      ...options,
-    }),
+export const login = async (
+  userName: string,
+  password: string
+): Promise<boolean> => {
+  try {
+    const responseBody: TLoginResponse =
+      await authentication.loginAuthentication({
+        data: {
+          user_name: userName,
+          password: password,
+        },
+      })
+    localStorage.setItem('ACCESS_TOKEN', responseBody.access_token)
+    localStorage.setItem('REFRESH_TOKEN', responseBody.refresh_token)
+    return true
+  } catch (error) {
+    // debugger
+    return false
+  }
 }

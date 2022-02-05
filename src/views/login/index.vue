@@ -3,7 +3,7 @@ import oToDoLogo from '@/assets/images/oToDo-logo.jpg'
 import LoggingIn from '@/assets/images/logging-in.gif'
 import { ref, reactive, toRefs } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { login } from '@/utils/userLogin'
+import { login } from '@/api/user'
 
 const router = useRouter()
 const isLogin = ref(true)
@@ -37,15 +37,12 @@ const handleLogin = async () => {
       return
     }
   }
-
-  try {
-    await login(username.value.val, password.value.val)
-  } catch (error) {
-    console.error(error)
+  const isSuccess = await login(username.value.val, password.value.val)
+  if (isSuccess) {
+    router.push('/')
+  } else {
     isLoading.value = false
-    return
   }
-  router.push('/')
 }
 </script>
 <template>
@@ -86,6 +83,7 @@ const handleLogin = async () => {
       </div>
 
       <div class="button-group">
+        <span>{{}}</span>
         <input
           type="submit"
           value="登录"
