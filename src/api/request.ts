@@ -5,6 +5,7 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios'
+import token from '@/utils/token'
 
 interface MyAxiosInstance extends AxiosInstance {
   (config: AxiosRequestConfig): Promise<any>
@@ -36,9 +37,9 @@ export class Request {
      */
     this.axiosInstance.interceptors.request.use(
       (config) => {
-        const token = localStorage.getItem('ACCESS_TOKEN')
-        if (token && config.headers) {
-          config.headers.Authorization = 'Bearer ' + token
+        const accessToken = token.getAccessToken()
+        if (accessToken && config.headers) {
+          config.headers.Authorization = 'Bearer ' + accessToken
         }
         return config
       },
