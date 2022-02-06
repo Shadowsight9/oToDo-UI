@@ -1,8 +1,12 @@
 import cookie from './cookie'
+import { jwtToExpireTime } from '@/utils/jwt'
 
-const setAccessToken = (token: string, maxAge: number): void => {
-  cookie.clearCookie('ACCESS_TOKEN')
-  cookie.setCookie('ACCESS_TOKEN', '', maxAge)
+const setAccessToken = (token: string, maxAge?: number): void => {
+  if (maxAge) {
+    cookie.setCookie('ACCESS_TOKEN', '', maxAge)
+  } else {
+    cookie.setCookie('ACCESS_TOKEN', '', jwtToExpireTime(token))
+  }
   localStorage.setItem('ACCESS_TOKEN', token)
 }
 

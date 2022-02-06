@@ -44,11 +44,10 @@ export class Request {
     this.axiosInstance.interceptors.response.use(
       // 请求成功
       (response: AxiosResponse) => {
-        if (response.headers && response.headers.Authorization) {
-          token.setAccessToken(response.headers.Authorization.split(' ')[1])
-        }
-        if (response.status !== 200) {
-          Request.errorHandle(response)
+        // 检查响应头中是否含有Authorization字段
+        if (response.headers && response.headers.authorization) {
+          const jwtString = response.headers.authorization.split(' ')[1]
+          token.setAccessToken(jwtString)
         }
         return Promise.resolve(response.data)
       },

@@ -1,8 +1,17 @@
-function setCookie(name: string, value: string, maxAge: number) {
-  const exp = new Date()
-  exp.setTime(exp.getTime() + maxAge * 1000)
-  document.cookie =
-    name + '=' + encodeURI(value) + ';expires=' + exp.toUTCString()
+function setCookie(
+  name: string,
+  value: string,
+  expireTime: number | Date = 800
+) {
+  if (typeof expireTime === 'number') {
+    const exp = new Date()
+    exp.setTime(exp.getTime() + expireTime * 1000)
+    document.cookie =
+      name + '=' + encodeURI(value) + ';expires=' + exp.toUTCString()
+  } else {
+    document.cookie =
+      name + '=' + encodeURI(value) + ';expires=' + expireTime.toUTCString()
+  }
 }
 
 function getCookie(name: string) {
