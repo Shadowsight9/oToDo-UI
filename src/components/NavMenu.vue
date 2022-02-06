@@ -80,7 +80,6 @@ import SvgIcon from './SvgIcon.vue'
     width: 100%;
   }
   color: $font-color-normal;
-  user-select: none;
 }
 .body {
   display: flex;

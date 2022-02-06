@@ -12,6 +12,7 @@ import MainBoard from '@/components/MainBoard.vue'
   display: flex;
   height: 100vh;
   width: 100vw;
+  user-select: none;
   > * {
     height: 100vh;
   }
