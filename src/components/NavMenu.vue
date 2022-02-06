@@ -80,6 +80,7 @@ import SvgIcon from './SvgIcon.vue'
     width: 100%;
   }
   color: $font-color-normal;
+  user-select: none;
 }
 .body {
   display: flex;
@@ -137,7 +138,7 @@ import SvgIcon from './SvgIcon.vue'
     align-items: center;
     background-color: $menu-searchbar-background-default;
     border: 1px solid $menu-searchbar-border;
-    border-bottom: 2px solid $menu-searchbar-border-bottom;
+    border-bottom: 2px solid $slate-gray;
     border-radius: 4px;
     &:hover {
       background-color: $menu-searchbar-background-hover;
@@ -232,7 +233,7 @@ import SvgIcon from './SvgIcon.vue'
       .checked {
         background-color: $menu-hover;
         &::before {
-          background-color: $menu-checked-boder-left;
+          background-color: $royal-blue;
         }
       }
       .delimiter {
@@ -267,7 +268,7 @@ import SvgIcon from './SvgIcon.vue'
   }
   .new-group:hover,
   .new-list:hover {
-    background-color: #ebebeb;
+    background-color: $light-gray;
   }
   .icon {
     width: 25px;

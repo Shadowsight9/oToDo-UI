@@ -81,9 +81,7 @@ const handleLogin = async () => {
         </div>
         <p class="change-mode">没有账户？<a @click="changeMode">创建一个</a></p>
       </div>
-
       <div class="button-group">
-        <span>{{}}</span>
         <input
           type="submit"
           value="登录"
@@ -95,24 +93,31 @@ const handleLogin = async () => {
   </div>
 </template>
 <style scoped lang="scss">
+@import '@/assets/styles/variables.module.scss';
 .wrapper {
   height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to right, #a8cecf, #e6ae8c);
+  background: $login-background;
 
   form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #fff;
+    justify-content: center;
+    background-color: $login-from-background;
     max-width: 380px;
     width: calc(100% - 40px);
     min-height: 330px;
-    box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
+    box-shadow: 0 2px 6px $light-transparency;
     padding: 0 40px;
+
+    @media (max-width: 768px) {
+      height: 100%;
+      width: 100vw;
+    }
 
     .img-loading {
       width: calc(100% + 80px);
@@ -129,8 +134,8 @@ const handleLogin = async () => {
       margin-top: 40px;
     }
     h1 {
-      margin: 10px 0 0 0;
-      font-size: 24px;
+      margin: 10px 0 0 10px;
+      font-size: $font-size-xxlarge;
     }
     .img-logo,
     h1 {
@@ -142,8 +147,6 @@ const handleLogin = async () => {
       .group-row {
         margin: 20px 0;
         p {
-          font-size: 14px;
-          color: #e81123;
           display: none;
         }
         input {
@@ -152,11 +155,11 @@ const handleLogin = async () => {
           height: 25px;
           padding: 6px;
           border: 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+          border-bottom: 1px solid $medium-transparency;
           outline: none;
-          font-size: 16px;
+          font-size: $font-size-large;
           &:hover {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.9);
+            border-bottom: 1px solid $deep-transparency;
           }
         }
       }
@@ -164,24 +167,24 @@ const handleLogin = async () => {
       .group-wearning {
         p {
           display: unset;
+          font-size: $font-size-medium;
+          color: $red;
         }
-        input {
-          border-bottom: 1.5px solid #e81123;
-          &:hover {
-            border-bottom: 1.5px solid #e81123;
-          }
+        input,
+        input:hover {
+          border-bottom: 1.5px solid $red;
         }
       }
 
       .change-mode {
-        font-size: 14px;
+        font-size: $font-size-medium;
         margin: 0;
         a {
-          color: #0067b8;
+          color: $royal-blue;
           cursor: pointer;
           &:hover {
             text-decoration: underline;
-            color: #666;
+            color: $slate-gray;
           }
         }
       }
@@ -192,19 +195,19 @@ const handleLogin = async () => {
       margin-bottom: 40px;
       align-self: flex-end;
       input {
-        background-color: #0067b8;
-        color: #fff;
+        background-color: $royal-blue;
+        color: $pure-white;
         height: 36px;
         width: 100px;
         border: 0;
         float: right;
         &:hover {
-          background-color: #005da6;
+          background-color: $dark-blue;
           cursor: pointer;
         }
         &:disabled {
-          background-color: #d1d1d1;
-          color: #b3b3b3;
+          background-color: $light-gray;
+          color: $slate-gray;
           cursor: wait;
         }
       }
