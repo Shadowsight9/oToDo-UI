@@ -37,9 +37,8 @@ export class Request {
      */
     this.axiosInstance.interceptors.request.use(
       (config) => {
-        const accessToken = token.getAccessToken()
-        if (accessToken && config.headers) {
-          config.headers.Authorization = 'Bearer ' + accessToken
+        if (config.headers && config.headers.needToken !== false) {
+          config.headers.Authorization = 'Bearer ' + token.getAccessToken()
         }
         return config
       },

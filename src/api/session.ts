@@ -4,6 +4,9 @@ import { AxiosRequestConfig } from 'axios'
 export const loginSession = (options?: AxiosRequestConfig): Promise<any> =>
   Request.axiosInstance({
     url: '/session',
+    headers: {
+      needToken: false,
+    },
     method: 'post',
     ...options,
   })
