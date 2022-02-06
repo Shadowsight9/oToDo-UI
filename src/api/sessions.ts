@@ -3,7 +3,7 @@ import { Request } from './request'
 import { AxiosRequestConfig } from 'axios'
 export const loginSession = (options?: AxiosRequestConfig): Promise<any> =>
   Request.axiosInstance({
-    url: '/session',
+    url: '/sessions',
     headers: {
       needToken: false,
     },
@@ -13,21 +13,21 @@ export const loginSession = (options?: AxiosRequestConfig): Promise<any> =>
 
 export const refreshSession = (options?: AxiosRequestConfig): Promise<any> =>
   Request.axiosInstance({
-    url: '/session/token',
+    url: '/sessions/token',
     method: 'post',
     ...options,
   })
 
 export const testSession = (options?: AxiosRequestConfig): Promise<any> =>
   Request.axiosInstance({
-    url: '/session',
+    url: '/sessions',
     method: 'get',
     ...options,
   })
 
 export const deleteSession = (options?: AxiosRequestConfig): Promise<any> =>
   Request.axiosInstance({
-    url: '/session',
+    url: '/sessions',
     method: 'delete',
     ...options,
   })
