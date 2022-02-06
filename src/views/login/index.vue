@@ -3,7 +3,7 @@ import oToDoLogo from '@/assets/images/oToDo-logo.jpg'
 import LoggingIn from '@/assets/images/logging-in.gif'
 import { ref, reactive, toRefs } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { login, testState, logout } from '@/api/user'
+import { login } from '@/api/user'
 
 const router = useRouter()
 const isLogin = ref(true)
@@ -43,10 +43,6 @@ const handleLogin = async () => {
   } else {
     isLoading.value = false
   }
-}
-
-const handleTest = async () => {
-  await logout()
 }
 </script>
 <template>
@@ -93,12 +89,6 @@ const handleTest = async () => {
           value="登录"
           :disabled="isLoading"
           @click.prevent="handleLogin"
-        />
-        <input
-          type="submit"
-          value="test"
-          :disabled="isLoading"
-          @click.prevent="handleTest"
         />
       </div>
     </form>

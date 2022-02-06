@@ -16,13 +16,10 @@ export class Request {
   public static axiosInstance: MyAxiosInstance
 
   public static init() {
-    // 创建axios实例
     this.axiosInstance = axios.create({
       baseURL: '/api',
       timeout: 10000,
     })
-
-    // 初始化拦截器
     this.initInterceptors()
   }
 
@@ -31,10 +28,6 @@ export class Request {
     // 设置post请求头
     this.axiosInstance.defaults.headers.post['Content-Type'] =
       'application/x-www-form-urlencoded'
-    /**
-     * 请求拦截器
-     * 每次请求前，如果存在token则在请求头中携带token
-     */
     this.axiosInstance.interceptors.request.use(
       (config) => {
         if (config.headers && config.headers.needToken !== false) {
@@ -43,7 +36,6 @@ export class Request {
         return config
       },
       (error) => {
-        // Toast.fail(error)
         console.log('请求失败', error)
       }
     )
@@ -52,6 +44,9 @@ export class Request {
     this.axiosInstance.interceptors.response.use(
       // 请求成功
       (response: AxiosResponse) => {
+        if (response.headers && response.headers.Authorization) {
+          token.setAccessToken(response.headers.Authorization.split(' ')[1])
+        }
         if (response.status !== 200) {
           Request.errorHandle(response)
         }

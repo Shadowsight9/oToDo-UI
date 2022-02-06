@@ -3,7 +3,7 @@ import {
   refreshSession,
   testSession,
   deleteSession,
-} from './session'
+} from './sessions'
 import token from '@/utils/token'
 import { useUserStore } from '@/store/userStore'
 import { TLoginResponse } from '@/types/session'
@@ -70,6 +70,14 @@ export const logout = async (): Promise<boolean> => {
     token.removeAllToken()
     return true
   } catch (err) {
+    return false
+  }
+}
+
+export const isLoggedIn = () => {
+  if (typeof token.getAccessToken() === 'string') {
+    return true
+  } else {
     return false
   }
 }
