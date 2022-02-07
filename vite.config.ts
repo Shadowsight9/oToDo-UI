@@ -10,6 +10,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
   const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY_URL } = env
 
+  console.log('current env:', env)
+
   return {
     base: VITE_PUBLIC_PATH,
     root,
