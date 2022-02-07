@@ -1,33 +1,73 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request } from './request'
-import { AxiosRequestConfig } from 'axios'
-export const loginSession = (options?: AxiosRequestConfig): Promise<any> =>
-  Request.axiosInstance({
-    url: '/sessions',
-    headers: {
-      needToken: false,
-    },
-    method: 'post',
-    ...options,
-  })
+import token from '@/utils/token'
+import { useUserStore } from '@/store/userStore'
+import { TLoginResponse } from '@/types/session'
 
-export const refreshSession = (options?: AxiosRequestConfig): Promise<any> =>
-  Request.axiosInstance({
-    url: '/sessions/token',
-    method: 'post',
-    ...options,
-  })
+const request = Request.getInstance()
 
-export const testSession = (options?: AxiosRequestConfig): Promise<any> =>
-  Request.axiosInstance({
+export const loginSession = async (name: string, pwd: string) => {
+  try {
+    const resopnse: unknown = await request.axiosInstance({
+      method: 'post',
+      url: '/sessions',
+      headers: {
+        needToken: false,
+      },
+      data: {
+        user_name: name,
+        password: pwd,
+      },
+    })
+    const { access_token, expires_in, refresh_token } =
+      resopnse as TLoginResponse
+
+    token.setAccessToken(access_token, expires_in)
+    useUserStore().setuserName(name)
+    if (typeof refresh_token == 'string') {
+      token.setRefreshToken(refresh_token)
+    }
+
+    return Promise.resolve()
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const refreshSession = async () => {
+  try {
+    const resopnse: unknown = await request.axiosInstance({
+      url: '/sessions/token',
+      method: 'post',
+    })
+
+    const { access_token, expires_in } = resopnse as TLoginResponse
+    token.setAccessToken(access_token, expires_in)
+
+    return Promise.resolve()
+  } catch (error) {
+    return Promise.reject()
+  }
+}
+
+export const testSession = async () => {
+  return await request.axiosInstance({
     url: '/sessions',
     method: 'get',
-    ...options,
   })
+}
 
-export const deleteSession = (options?: AxiosRequestConfig): Promise<any> =>
-  Request.axiosInstance({
-    url: '/sessions',
-    method: 'delete',
-    ...options,
-  })
+export const deleteSession = async () => {
+  const refreshToken = token.getRefreshToken()
+  try {
+    await request.axiosInstance({
+      url: '/sessions',
+      method: 'delete',
+      data: { refresh_token: refreshToken },
+    })
+    token.removeAllToken()
+    return Promise.resolve()
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}

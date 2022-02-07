@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import oToDoLogo from '@/assets/images/oToDo-logo.jpg'
-import LoggingIn from '@/assets/images/logging-in.gif'
 import { ref, reactive, toRefs } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { login } from '@/api/user'
+import { useRouter } from 'vue-router'
+import { loginSession } from '@/api/sessions'
+import { OpenMessage } from '@/utils/OComponents'
 
 const router = useRouter()
 const isLogin = ref(true)
@@ -27,22 +26,30 @@ const { username, password } = toRefs(loginForm)
 const changeMode = () => {
   isLogin.value = !isLogin.value
 }
-const handleLogin = async () => {
-  isLoading.value = true
-  for (const [k, v] of Object.entries(loginForm)) {
+
+const validFrom = (from: LoginFrom) => {
+  for (const [, v] of Object.entries(from)) {
     v.isValid = true
     if (v.val === '') {
       v.isValid = false
-      isLoading.value = false
-      return
+      return false
     }
   }
-  const isSuccess = await login(username.value.val, password.value.val)
-  if (isSuccess) {
-    router.push('/')
-  } else {
+  return true
+}
+
+const handleLogin = async () => {
+  isLoading.value = true
+  if (validFrom(loginForm) === false) {
     isLoading.value = false
+    return
   }
+  loginSession(username.value.val, password.value.val)
+    .then(() => router.push('/'))
+    .catch((err) => {
+      isLoading.value = false
+      OpenMessage(err, 2)
+    })
 }
 </script>
 <template>
@@ -51,10 +58,14 @@ const handleLogin = async () => {
       <img
         class="img-loading"
         :class="{ hidden: isLoading }"
-        :src="LoggingIn"
+        src="@/assets/images/logging-in.gif"
         alt="logging-in"
       />
-      <img class="img-logo" :src="oToDoLogo" alt="oToDo-logo" />
+      <img
+        class="img-logo"
+        src="@/assets/images/oToDo-logo.jpg"
+        alt="oToDo-logo"
+      />
       <h1>oToDo Login</h1>
       <div class="input-group">
         <div class="group-row" :class="{ 'group-wearning': !username.isValid }">

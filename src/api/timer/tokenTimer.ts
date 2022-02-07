@@ -1,4 +1,4 @@
-import { testState } from '@/api/user'
+import { testSession } from '@/api/sessions'
 
 export class TokenTimer {
   private static instance: TokenTimer
@@ -20,7 +20,8 @@ export class TokenTimer {
     clearInterval(this.intervelId)
   }
 
-  private async test() {
-    testState()
+  private test() {
+    // TODO: 定时器没有捕获异常
+    testSession()
   }
 }
