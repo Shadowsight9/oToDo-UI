@@ -37,7 +37,7 @@ export const loginSession = async (name: string, pwd: string) => {
 export const refreshSession = async () => {
   try {
     const resopnse: unknown = await request.axiosInstance({
-      url: '/sessions/token',
+      url: '/sessions/current/tokens',
       method: 'post',
     })
 
