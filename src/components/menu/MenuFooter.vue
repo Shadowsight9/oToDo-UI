@@ -4,11 +4,11 @@ import SvgIcon from '@/components/SvgIcon.vue'
 <template>
   <div class="footer">
     <div class="new-list">
-      <SvgIcon class="icon" name="plus"></SvgIcon>
+      <SvgIcon class="icon" name="plus" />
       <div>新建列表</div>
     </div>
     <div class="new-group">
-      <SvgIcon class="icon" name="new-group"></SvgIcon>
+      <SvgIcon class="icon" name="new-group" />
     </div>
   </div>
 </template>

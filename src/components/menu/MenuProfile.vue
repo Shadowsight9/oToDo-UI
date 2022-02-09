@@ -8,7 +8,7 @@ import SvgIcon from '@/components/SvgIcon.vue'
       <div class="account-name">黄 铮</div>
       <div class="account-email">
         <span> huangzheng@shu.edu.cn </span>
-        <SvgIcon class="icon" name="expand"></SvgIcon>
+        <SvgIcon class="icon" name="expand" />
       </div>
     </div>
   </div>

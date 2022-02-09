@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
-import { computed } from 'vue'
+import { computed, PropType, ref } from 'vue'
+import { INavItem } from '@/types/INavItem'
 
-const getIconName = (itemType: string) => {
+const getIconName = (itemType: string | undefined) => {
   switch (itemType) {
     case 'todo-list':
       return 'list'
@@ -22,31 +23,19 @@ const getIconName = (itemType: string) => {
 }
 
 const props = defineProps({
-  type: {
-    type: String,
-    default: 'todo-list',
-  },
-  title: {
-    type: String,
-    default: '无标题列表',
-  },
-  todoNum: {
-    type: Number,
-    default: 0,
-  },
-  isChecked: {
-    type: Boolean,
-    default: false,
+  data: {
+    type: Object as PropType<INavItem>,
+    required: true,
   },
 })
 
-const iconName = computed(() => getIconName(props.type))
+const iconName = computed(() => getIconName(props.data.type))
 </script>
 <template>
-  <li :class="{ checked: isChecked }">
-    <SvgIcon class="icon" :class="type" :name="iconName"></SvgIcon>
-    <span class="item-title">{{ title }}</span>
-    <span v-if="todoNum" class="todo-num">{{ todoNum }}</span>
+  <li :class="{ checked: data.isChecked }">
+    <SvgIcon class="icon" :class="data.type" :name="iconName" />
+    <span class="item-title">{{ data.title }}</span>
+    <span v-if="data.todoNum" class="todo-num">{{ data.todoNum }}</span>
   </li>
 </template>
 <style scoped lang="scss">

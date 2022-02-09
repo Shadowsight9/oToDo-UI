@@ -1,7 +1,15 @@
 export interface INavItem {
-  type?: string
+  type?: ItemType
   title: string
-  checked?: boolean
-  num?: number
-  data?: INavItem[]
+  isChecked?: boolean
+  todoNum?: number
+  itemArray?: INavItem[]
 }
+
+type ItemType =
+  | 'my-day'
+  | 'important-todo'
+  | 'in-plan'
+  | 'assign-to-me'
+  | 'task-todo'
+  | 'todo-list'

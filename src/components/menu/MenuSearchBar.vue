@@ -18,7 +18,7 @@ const emit = defineEmits(['search'])
       @input="text = ($event.target as HTMLInputElement).value"
       @keyup.enter="emit('search', text)"
     />
-    <SvgIcon class="icon" name="search" @click="emit('search', text)"></SvgIcon>
+    <SvgIcon class="icon" name="search" @click="emit('search', text)" />
   </div>
 </template>
 <style scoped lang="scss">

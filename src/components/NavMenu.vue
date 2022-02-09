@@ -4,7 +4,7 @@ import {
   MenuProfile,
   MenuFooter,
   NavItem,
-  NavGroup,
+  NavFolder,
 } from '@/components/menu'
 import { INavItem } from '@/types/INavItem'
 
@@ -18,48 +18,48 @@ const menuData = ref<INavItem[]>([
   {
     type: 'my-day',
     title: '我的一天',
-    checked: true,
+    isChecked: true,
   },
   {
     type: 'important-todo',
     title: '重要',
-    checked: false,
+    isChecked: false,
   },
   {
     type: 'in-plan',
     title: '计划内',
-    checked: false,
+    isChecked: false,
   },
   {
     type: 'assign-to-me',
     title: '已分配给我',
-    checked: false,
+    isChecked: false,
   },
   {
     type: 'task-todo',
     title: '任务',
-    checked: false,
+    isChecked: false,
   },
   {
     title: '测试用组',
-    data: [
+    itemArray: [
       {
         type: 'todo-list',
         title: '组内列表1',
-        checked: true,
-        num: 10,
+        isChecked: true,
+        todoNum: 10,
       },
       {
         type: 'todo-list',
         title: '组内列表2',
-        checked: false,
-        num: 10,
+        isChecked: false,
+        todoNum: 10,
       },
       {
         type: 'todo-list',
         title: '组内列表3',
-        checked: false,
-        num: 10,
+        isChecked: false,
+        todoNum: 10,
       },
     ],
   },
@@ -67,10 +67,10 @@ const menuData = ref<INavItem[]>([
 
 const clearClick = (dataRef = menuData.value) => {
   dataRef.forEach((obj) => {
-    if (obj?.data) {
-      clearClick(obj.data)
+    if (obj?.itemArray) {
+      clearClick(obj.itemArray)
     } else {
-      obj.checked = false
+      obj.isChecked = false
     }
   })
 }
@@ -81,12 +81,12 @@ const clickHandler = (
   dataRef = menuData.value
 ) => {
   if (parentIndex) {
-    clickHandler(childrenIndex, undefined, dataRef[parentIndex].data)
+    clickHandler(childrenIndex, undefined, dataRef[parentIndex].itemArray)
   } else {
     // TODO: 改变MainBoard内容
     clearClick()
 
-    dataRef[childrenIndex].checked = true
+    dataRef[childrenIndex].isChecked = true
   }
 }
 </script>
@@ -100,20 +100,14 @@ const clickHandler = (
       <nav class="nav-menu">
         <ul>
           <template v-for="(item, index) in menuData" :key="index">
-            <NavGroup
-              v-if="item?.data"
+            <NavFolder
+              v-if="item?.itemArray"
               :title="item.title"
-              :data="item.data"
+              :data="item.itemArray"
               :parent-index="index"
               @click="clickHandler"
             />
-            <NavItem
-              v-else
-              :type="item.type"
-              :title="item.title"
-              :is-checked="item.checked"
-              @click="clickHandler(index)"
-            />
+            <NavItem v-else :data="item" @click="clickHandler(index)" />
           </template>
 
           <hr class="delimiter" />

@@ -28,19 +28,16 @@ const clickHandler = () => {
 </script>
 <template>
   <li @click="clickHandler">
-    <SvgIcon class="icon" name="group"></SvgIcon>
+    <SvgIcon class="icon" name="group" />
     <span class="item-title"> {{ title }}</span>
-    <SvgIcon class="icon" name="down-arrow"></SvgIcon>
+    <SvgIcon class="icon" name="down-arrow" />
   </li>
   <NavItem
     v-for="(item, index) in data"
     v-show="isExpand"
     :key="index"
     class="todo-group-list"
-    :type="item?.type"
-    :title="item.title"
-    :todo-num="item.num"
-    :is-checked="item.checked"
+    :data="item"
     @click="emit('click', index, parentIndex)"
   />
 </template>
