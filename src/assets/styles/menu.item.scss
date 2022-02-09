@@ -1,0 +1,55 @@
+@import '@/assets/styles/variables.module.scss';
+li {
+  width: 100%;
+  list-style: none;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: $menu-hover;
+  }
+  &::before {
+    content: '';
+    background-color: transparent;
+    height: 18px;
+    width: 3px;
+    border-radius: 4px;
+    margin-right: 4px;
+  }
+
+  .icon {
+    width: $icon-size-medium;
+    height: $icon-size-medium;
+    margin-right: 10px;
+  }
+
+  .item-title {
+    flex: 1 1 150px;
+    font-size: $font-size-large;
+  }
+
+  .my-day {
+    color: $light-steel-blue;
+  }
+  .important-todo {
+    color: $deep-pink;
+  }
+  .in-plan {
+    color: $dark-cyan;
+  }
+  .assign-to-me {
+    color: $sea-green;
+  }
+  .task-todo {
+    color: $slate-blue;
+  }
+}
+
+.checked {
+  background-color: $menu-hover;
+  &::before {
+    background-color: $royal-blue;
+  }
+}
