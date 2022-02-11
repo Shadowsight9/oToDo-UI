@@ -1,24 +1,45 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
-import { ref } from 'vue'
+import { ref, computed, reactive } from 'vue'
+import { IMenuProps } from '@/types/IMbMenu'
+import { boardFooterStore } from '@/store/boardFooterStroe'
+
+const store = boardFooterStore()
+
 const inputStr = ref('')
+
+const listLmbHandler = (index: number) => {
+  store.setlistIndex(index)
+}
+
+const listLmbMenu = reactive<IMenuProps>({
+  data: [
+    { text: 'hello', iconName: 'home' },
+    { text: 'hello', iconName: 'list' },
+  ],
+  handler: listLmbHandler,
+})
+const currentSelector = computed(() => {
+  return listLmbMenu.data[store.listIndex]
+})
+const pos = ref('top')
 </script>
 <template>
   <footer class="footer">
     <div class="add-todo">
       <div id="icon" name="check"></div>
       <input v-model="inputStr" class="add-todo-input" type="text" />
-      <div v-show="inputStr" class="selector">
-        <div class="list-selector">
-          <SvgIcon class="icon list" name="list"></SvgIcon>
-          <span class="list-text">{{}}</span>
+      <div v-show="true" class="selector">
+        <div v-lmb-menu:[pos]="listLmbMenu" class="list-selector">
+          <SvgIcon class="icon" name="list"></SvgIcon>
+          <span class="list-text">{{ currentSelector }}</span>
         </div>
         <div class="calender-selector">
-          <SvgIcon class="icon calender" name="calendar"></SvgIcon>
+          <SvgIcon class="icon" name="calendar"></SvgIcon>
           <span class="calender-text">{{}}</span>
         </div>
         <div class="loop-selector">
-          <SvgIcon class="icon loop" name="loop"></SvgIcon>
+          <SvgIcon class="icon" name="loop"></SvgIcon>
           <span class="loop-text">{{}}</span>
         </div>
       </div>
@@ -66,16 +87,16 @@ const inputStr = ref('')
       height: 100%;
       div {
         height: 100%;
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 0 5px;
         border-radius: 4px;
-        overflow: hidden;
+        overflow: visible;
         span {
           overflow: hidden;
         }
-
         .icon {
           border: unset;
           width: $icon-size-large;
