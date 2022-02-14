@@ -1,4 +1,4 @@
-import { testSession } from '@/api/sessions'
+import { testSession } from '@/apis/sessions'
 
 export class TokenTimer {
   private static instance: TokenTimer

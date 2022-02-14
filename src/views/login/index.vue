@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
-import { loginSession } from '@/api/sessions'
+import { loginSession } from '@/apis/sessions'
 import { OpenMessage } from '@/utils/openComponents'
 
 const router = useRouter()
