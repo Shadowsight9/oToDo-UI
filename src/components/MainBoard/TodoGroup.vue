@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
-import TodoItem from '@/components/board/TodoItem.vue'
+import TodoItem from '@/components/MainBoard/TodoItem.vue'
 import { ICompletedGroup, ITimeGroup, IListGroup } from '@/types/ITodoItem'
 import { PropType, ref } from 'vue'
 defineProps({

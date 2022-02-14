@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
-import NavItem from '@/components/menu/NavItem.vue'
+import NavItem from '@/components/LeftMenu/NavItem.vue'
 import { ref, PropType } from 'vue'
 import { INavItem } from '@/types/INavItem'
 

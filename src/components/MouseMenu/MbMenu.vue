@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
 import { PropType } from 'vue'
-import { IMenuItem } from '@/types/IMbMenu'
+import { IMenuItem } from '@/types/IMouseMenu'
 
 defineProps({
   data: {

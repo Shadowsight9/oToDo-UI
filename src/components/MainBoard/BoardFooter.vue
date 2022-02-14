@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
 import { ref, computed, reactive } from 'vue'
-import { IMenuProps } from '@/types/IMbMenu'
+import { IMenuProps } from '@/types/IMouseMenu'
 import { boardFooterStore } from '@/store/boardFooterStroe'
 
 const store = boardFooterStore()

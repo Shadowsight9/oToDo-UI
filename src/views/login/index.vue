@@ -2,7 +2,7 @@
 import { ref, reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { loginSession } from '@/api/sessions'
-import { OpenMessage } from '@/utils/OComponents'
+import { OpenMessage } from '@/utils/openComponents'
 
 const router = useRouter()
 const isLogin = ref(true)

@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
-import { TUser } from '@/types/user'
+import { IUser } from '@/types/IUser'
 
 export const useUserStore = defineStore('useUser', {
-  state: (): TUser => ({
+  state: (): IUser => ({
     token: '',
     userName: '',
   }),
   actions: {
-    setItem(data: TUser) {
+    setItem(data: IUser) {
       if (data) {
         this.token = data.token
         this.userName = data.userName

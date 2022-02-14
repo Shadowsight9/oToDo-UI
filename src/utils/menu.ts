@@ -1,7 +1,7 @@
-import { IMenuProps } from '@/types/IMbMenu'
+import { IMenuProps } from '@/types/IMouseMenu'
 
 import { h, render, DirectiveBinding } from 'vue'
-import MbMenu from '@/components/mb-menu/MbMenu.vue'
+import MbMenu from '@/components/MouseMenu/MbMenu.vue'
 
 // type ItemPos = 'top' | 'bottom'
 const menuPosition = (position: string | undefined) => {

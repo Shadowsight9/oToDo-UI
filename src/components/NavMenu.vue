@@ -5,7 +5,7 @@ import {
   MenuFooter,
   NavItem,
   NavFolder,
-} from '@/components/menu'
+} from '@/components/LeftMenu'
 import { INavItem } from '@/types/INavItem'
 
 import { ref } from 'vue'

@@ -1,7 +1,7 @@
 import { h, render } from 'vue'
 
-import ODialog from '@/components/ODialog/ODialog.vue'
-import OMessage from '@/components/OMessage/OMessage.vue'
+import ODialog from '@/components/ModalDialog/ODialog.vue'
+import OMessage from '@/components/MessageBox/OMessage.vue'
 
 interface callBackFunc {
   (): void

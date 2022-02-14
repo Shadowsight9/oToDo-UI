@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import SvgIcon from './SvgIcon.vue'
-import TodoItem from '@/components/board/TodoItem.vue'
-import TodoGroup from '@/components/board/TodoGroup.vue'
-import BoardFooter from '@/components/board/BoardFooter.vue'
+import TodoItem from '@/components/MainBoard/TodoItem.vue'
+import TodoGroup from '@/components/MainBoard/TodoGroup.vue'
+import BoardFooter from '@/components/MainBoard/BoardFooter.vue'
 
 import { ref } from 'vue'
 import { ITodoItem, ITimeGroup } from '@/types/ITodoItem'

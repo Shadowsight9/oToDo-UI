@@ -2,7 +2,7 @@
 import { Request } from './request'
 import token from '@/utils/token'
 import { useUserStore } from '@/store/userStore'
-import { TLoginResponse } from '@/types/session'
+import { ILoginResponse } from '@/types/ISession'
 
 const request = Request.getInstance()
 
@@ -20,7 +20,7 @@ export const loginSession = async (name: string, pwd: string) => {
       },
     })
     const { access_token, expires_in, refresh_token } =
-      resopnse as TLoginResponse
+      resopnse as ILoginResponse
 
     token.setAccessToken(access_token, expires_in)
     useUserStore().setuserName(name)
@@ -41,7 +41,7 @@ export const refreshSession = async () => {
       method: 'post',
     })
 
-    const { access_token, expires_in } = resopnse as TLoginResponse
+    const { access_token, expires_in } = resopnse as ILoginResponse
     token.setAccessToken(access_token, expires_in)
 
     return Promise.resolve()
