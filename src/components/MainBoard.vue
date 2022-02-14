@@ -3,6 +3,7 @@ import SvgIcon from './SvgIcon.vue'
 import TodoItem from '@/components/MainBoard/TodoItem.vue'
 import TodoGroup from '@/components/MainBoard/TodoGroup.vue'
 import BoardFooter from '@/components/MainBoard/BoardFooter.vue'
+import TodoDetail from '@/components/TodoDetail.vue'
 
 import { ref } from 'vue'
 import { ITodoItem, ITimeGroup } from '@/types/ITodoItem'
@@ -38,80 +39,97 @@ const groupData = ref<ITimeGroup>({
 </script>
 <template>
   <div class="main-board">
-    <div class="body">
-      <header class="board-header">
-        <div class="header-title">
-          <h1>我的一天</h1>
-          <p>2月1日，星期二</p>
-        </div>
-        <div class="header-button-group">
-          <SvgIcon class="icon" name="bulb"></SvgIcon>
-          <SvgIcon class="icon" name="settings"></SvgIcon>
-        </div>
-      </header>
-      <ul class="todo-list">
-        <TodoItem :data="itemData" />
-        <TodoGroup :data="groupData" />
-      </ul>
+    <div class="board-wrapper">
+      <div class="body">
+        <header class="board-header">
+          <div class="header-title">
+            <h1>我的一天</h1>
+            <p>2月1日，星期二</p>
+          </div>
+          <div class="header-button-group">
+            <SvgIcon class="icon" name="bulb"></SvgIcon>
+            <SvgIcon class="icon" name="settings"></SvgIcon>
+          </div>
+        </header>
+        <ul class="todo-list">
+          <TodoItem :data="itemData" />
+          <TodoGroup :data="groupData" />
+        </ul>
+      </div>
+      <BoardFooter />
     </div>
-    <BoardFooter />
+    <div class="aside">
+      <TodoDetail />
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
 @import '@/assets/styles/variables.module.scss';
 
 .main-board {
-  background-image: url('@/assets/images/background-image.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 8px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   & > * {
-    width: 100%;
+    height: 100%;
   }
-
-  .body {
+  .board-wrapper {
+    flex: 1;
+    background-image: url('@/assets/images/background-image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
-    overflow: scroll;
-    > * {
-      width: 90%;
+    & > * {
+      width: 100%;
     }
-    .board-header {
-      height: 100px;
+
+    .body {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      color: $pure-white;
-      .header-title {
-        p,
-        h1 {
-          margin: 0.2em 0;
-        }
+      height: 100%;
+      overflow: scroll;
+      > * {
+        width: 90%;
       }
-      .header-button-group {
-        .icon {
-          width: $icon-size-large;
-          height: $icon-size-large;
-          margin: 5px;
-          padding: 5px;
-          border-radius: 4px;
-          &:hover {
-            background-color: $light-transparency;
+      .board-header {
+        height: 100px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        color: $pure-white;
+        .header-title {
+          p,
+          h1 {
+            margin: 0.2em 0;
+          }
+        }
+        .header-button-group {
+          .icon {
+            width: $icon-size-large;
+            height: $icon-size-large;
+            margin: 5px;
+            padding: 5px;
+            border-radius: 4px;
+            &:hover {
+              background-color: $light-transparency;
+            }
           }
         }
       }
+      ul.todo-list {
+        flex: 1 1 800px;
+        margin: 0;
+        padding: 0;
+      }
     }
-    ul.todo-list {
-      flex: 1 1 800px;
-      margin: 0;
-      padding: 0;
-    }
+  }
+  .aside {
+    width: 350px;
+    height: 100%;
   }
 }
 </style>
