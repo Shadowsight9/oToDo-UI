@@ -1,76 +1,49 @@
-import { Request } from './request'
+import { http } from '@/apis/http'
 import token from '@/utils/token'
 import { useUserStore } from '@/store/userStore'
 import { ILoginResponse } from '@/types/ISession'
 import { AxiosResponse } from 'axios'
 
-const request = Request.getInstance()
+enum Api {
+  SessionURL = '/sessions',
+  sessionTokenURL = '/sessions/current/tokens',
+}
 
 export const loginSession = async (name: string, pwd: string) => {
-  try {
-    const resopnse: AxiosResponse<ILoginResponse> = await request.axiosInstance(
-      {
-        method: 'post',
-        url: '/sessions',
-        headers: {
-          needToken: false,
-        },
-        data: {
-          user_name: name,
-          password: pwd,
-        },
-      }
-    )
-    const { access_token, expires_in, refresh_token } = resopnse.data
-
-    token.setAccessToken(access_token, expires_in)
-    useUserStore().setuserName(name)
-    if (typeof refresh_token == 'string') {
-      token.setRefreshToken(refresh_token)
+  const resopnse: AxiosResponse<ILoginResponse> = await http.post(
+    Api.SessionURL,
+    {
+      user_name: name,
+      password: pwd,
+    },
+    {
+      headers: {
+        needToken: false,
+      },
     }
+  )
+  const { access_token, expires_in, refresh_token } = resopnse.data
 
-    return Promise.resolve()
-  } catch (error) {
-    return Promise.reject(error)
+  token.setAccessToken(access_token, expires_in)
+  useUserStore().setuserName(name)
+  if (typeof refresh_token == 'string') {
+    token.setRefreshToken(refresh_token)
   }
 }
 
 export const refreshSession = async () => {
-  try {
-    const resopnse: AxiosResponse<ILoginResponse> = await request.axiosInstance(
-      {
-        url: '/sessions/current/tokens',
-        method: 'post',
-      }
-    )
-
-    const { access_token, expires_in } = resopnse.data
-    token.setAccessToken(access_token, expires_in)
-
-    return Promise.resolve()
-  } catch (error) {
-    return Promise.reject(error)
-  }
+  const resopnse: AxiosResponse<ILoginResponse> = await http.post(
+    Api.sessionTokenURL
+  )
+  const { access_token, expires_in } = resopnse.data
+  token.setAccessToken(access_token, expires_in)
 }
 
-export const testSession = async () => {
-  return await request.axiosInstance({
-    url: '/sessions',
-    method: 'get',
-  })
+export const testSession = () => {
+  return http.get(Api.SessionURL)
 }
 
 export const deleteSession = async () => {
-  const refreshToken = token.getRefreshToken()
-  try {
-    await request.axiosInstance({
-      url: '/sessions',
-      method: 'delete',
-      data: { refresh_token: refreshToken },
-    })
-    token.removeAllToken()
-    return Promise.resolve()
-  } catch (error) {
-    return Promise.reject(error)
-  }
+  await http.delete(Api.SessionURL)
+  token.removeAllToken()
 }

@@ -6,8 +6,8 @@ import axios, {
 } from 'axios'
 import token from '@/utils/token'
 
-export class Request {
-  private static instance: Request
+export class Http {
+  private static instance: Http
   public axiosInstance: AxiosInstance
 
   private constructor() {
@@ -19,10 +19,10 @@ export class Request {
   }
 
   public static getInstance() {
-    if (!Request.instance) {
-      Request.instance = new Request()
+    if (!Http.instance) {
+      Http.instance = new Http()
     }
-    return Request.instance
+    return Http.instance
   }
 
   private requestSuccess = (config: AxiosRequestConfig<any>) => {
@@ -93,3 +93,5 @@ export class Request {
     )
   }
 }
+
+export const http = Http.getInstance().axiosInstance
