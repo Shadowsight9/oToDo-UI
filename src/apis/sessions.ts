@@ -1,26 +1,27 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request } from './request'
 import token from '@/utils/token'
 import { useUserStore } from '@/store/userStore'
 import { ILoginResponse } from '@/types/ISession'
+import { AxiosResponse } from 'axios'
 
 const request = Request.getInstance()
 
 export const loginSession = async (name: string, pwd: string) => {
   try {
-    const resopnse: unknown = await request.axiosInstance({
-      method: 'post',
-      url: '/sessions',
-      headers: {
-        needToken: false,
-      },
-      data: {
-        user_name: name,
-        password: pwd,
-      },
-    })
-    const { access_token, expires_in, refresh_token } =
-      resopnse as ILoginResponse
+    const resopnse: AxiosResponse<ILoginResponse> = await request.axiosInstance(
+      {
+        method: 'post',
+        url: '/sessions',
+        headers: {
+          needToken: false,
+        },
+        data: {
+          user_name: name,
+          password: pwd,
+        },
+      }
+    )
+    const { access_token, expires_in, refresh_token } = resopnse.data
 
     token.setAccessToken(access_token, expires_in)
     useUserStore().setuserName(name)
@@ -36,17 +37,19 @@ export const loginSession = async (name: string, pwd: string) => {
 
 export const refreshSession = async () => {
   try {
-    const resopnse: unknown = await request.axiosInstance({
-      url: '/sessions/current/tokens',
-      method: 'post',
-    })
+    const resopnse: AxiosResponse<ILoginResponse> = await request.axiosInstance(
+      {
+        url: '/sessions/current/tokens',
+        method: 'post',
+      }
+    )
 
-    const { access_token, expires_in } = resopnse as ILoginResponse
+    const { access_token, expires_in } = resopnse.data
     token.setAccessToken(access_token, expires_in)
 
     return Promise.resolve()
   } catch (error) {
-    return Promise.reject()
+    return Promise.reject(error)
   }
 }
 

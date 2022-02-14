@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, {
   AxiosInstance,
   AxiosError,
@@ -42,7 +41,7 @@ export class Request {
       const jwtString = response.headers.authorization.split(' ')[1]
       token.setAccessToken(jwtString)
     }
-    return Promise.resolve(response.data)
+    return Promise.resolve(response)
   }
 
   private responseFail = (error: AxiosError) => {
