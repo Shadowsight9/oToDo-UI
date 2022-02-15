@@ -1,33 +1,44 @@
 <script setup lang="ts">
-import { ref, reactive, toRefs } from 'vue'
+import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { loginSession } from '@/apis/sessions'
 import { OpenMessage } from '@/utils/openComponents'
+import { register } from '@/apis/user'
 
 const router = useRouter()
 const isLogin = ref(true)
 const isLoading = ref(false)
 
-interface FromItem {
+interface FormItem {
   val: string
   isValid: boolean
 }
-interface LoginFrom {
-  username: FromItem
-  password: FromItem
+interface LoginForm {
+  username: FormItem
+  password: FormItem
 }
-const loginForm: LoginFrom = reactive({
+interface RegisterForm {
+  username: FormItem
+  password: FormItem
+  nickname: FormItem
+}
+
+const loginForm: LoginForm = reactive({
   username: { val: '', isValid: true },
   password: { val: '', isValid: true },
 })
 
-const { username, password } = toRefs(loginForm)
+const registerForm: RegisterForm = reactive({
+  username: { val: '', isValid: true },
+  password: { val: '', isValid: true },
+  nickname: { val: '', isValid: true },
+})
 
 const changeMode = () => {
   isLogin.value = !isLogin.value
 }
 
-const validFrom = (from: LoginFrom) => {
+const validForm = (from: LoginForm | RegisterForm) => {
   for (const [, v] of Object.entries(from)) {
     v.isValid = true
     if (v.val === '') {
@@ -38,14 +49,36 @@ const validFrom = (from: LoginFrom) => {
   return true
 }
 
-const handleLogin = async () => {
+const handleLogin = () => {
   isLoading.value = true
-  if (validFrom(loginForm) === false) {
+  if (validForm(loginForm) === false) {
     isLoading.value = false
     return
   }
-  loginSession(username.value.val, password.value.val)
+  loginSession(loginForm.username.val, loginForm.password.val)
     .then(() => router.push('/'))
+    .catch((err) => {
+      isLoading.value = false
+      OpenMessage(err, 2)
+    })
+}
+
+const handleRegister = () => {
+  isLoading.value = true
+  if (validForm(registerForm) === false) {
+    isLoading.value = false
+    return
+  }
+  register(
+    registerForm.username.val,
+    registerForm.nickname.val,
+    registerForm.password.val
+  )
+    .then(() => {
+      changeMode()
+      loginForm.username = registerForm.username
+      loginForm.password = registerForm.password
+    })
     .catch((err) => {
       isLoading.value = false
       OpenMessage(err, 2)
@@ -68,22 +101,28 @@ const handleLogin = async () => {
       />
       <h1>oToDo Login</h1>
       <div class="input-group">
-        <div class="group-row" :class="{ 'group-wearning': !username.isValid }">
+        <div
+          class="group-row"
+          :class="{ 'group-wearning': !loginForm.username.isValid }"
+        >
           <p>请输入有效的电子邮件地址、电话号码或 Skype 用户名</p>
           <input
             id="username"
-            v-model="username.val"
+            v-model="loginForm.username.val"
             type="text"
             name="username"
             :disabled="isLoading"
             placeholder="用户名、电子邮件、电话或 Skype"
           />
         </div>
-        <div class="group-row" :class="{ 'group-wearning': !password.isValid }">
+        <div
+          class="group-row"
+          :class="{ 'group-wearning': !loginForm.password.isValid }"
+        >
           <p>请输入有效的密码</p>
           <input
             id="password"
-            v-model="password.val"
+            v-model="loginForm.password.val"
             type="password"
             name="password"
             :disabled="isLoading"
@@ -98,6 +137,76 @@ const handleLogin = async () => {
           value="登录"
           :disabled="isLoading"
           @click.prevent="handleLogin"
+        />
+      </div>
+    </form>
+    <form v-else class="register-box">
+      <img
+        class="img-loading"
+        :class="{ hidden: isLoading }"
+        src="@/assets/images/logging-in.gif"
+        alt="logging-in"
+      />
+      <img
+        class="img-logo"
+        src="@/assets/images/oToDo-logo.jpg"
+        alt="oToDo-logo"
+      />
+      <h1>oToDo Register</h1>
+      <div class="input-group">
+        <div
+          class="group-row"
+          :class="{ 'group-wearning': !registerForm.username.isValid }"
+        >
+          <p>请输入有效的电子邮件地址、电话号码或 Skype 用户名</p>
+          <input
+            id="username"
+            v-model="registerForm.username.val"
+            type="text"
+            name="username"
+            :disabled="isLoading"
+            placeholder="用户名、电子邮件、电话或 Skype"
+          />
+        </div>
+        <div
+          class="group-row"
+          :class="{ 'group-wearning': !registerForm.nickname.isValid }"
+        >
+          <p>请输入有效的昵称</p>
+          <input
+            id="nickname"
+            v-model="registerForm.nickname.val"
+            type="text"
+            name="nickname"
+            :disabled="isLoading"
+            placeholder="昵称"
+          />
+        </div>
+        <div
+          class="group-row"
+          :class="{ 'group-wearning': !registerForm.password.isValid }"
+        >
+          <p>请输入有效的密码</p>
+          <input
+            id="password"
+            v-model="registerForm.password.val"
+            type="password"
+            name="password"
+            :disabled="isLoading"
+            placeholder="密码"
+          />
+        </div>
+
+        <p class="change-mode">
+          已经有了账户？<a @click="changeMode">去登录</a>
+        </p>
+      </div>
+      <div class="button-group">
+        <input
+          type="submit"
+          value="注册"
+          :disabled="isLoading"
+          @click.prevent="handleRegister"
         />
       </div>
     </form>
