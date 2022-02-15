@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import NavMenu from '@/components/NavMenu.vue'
 import MainBoard from '@/components/MainBoard.vue'
-import { INavItem, INavFolder } from '@/types/INavItem'
+import { INavItem, INavFolder, ItemType } from '@/types/INavItem'
 import { ref } from 'vue'
 
 import { getTodoByListId } from '@/apis/todo'
@@ -9,22 +9,26 @@ import { ITodoItem } from '@/types/ITodoItem'
 
 const menuData = ref<(INavItem | INavFolder)[]>([
   {
+    type: 'todo-folder',
+    id: '1',
     title: '测试用组',
     itemArray: [
       {
-        id: 'gfdsafdasfdasfdas',
+        id: 'a1',
         type: 'todo-list',
         title: '组内列表1',
         isChecked: false,
         todoNum: 10,
       },
       {
+        id: 'a2',
         type: 'todo-list',
         title: '组内列表2',
         isChecked: false,
         todoNum: 10,
       },
       {
+        id: 'a3',
         type: 'todo-list',
         title: '组内列表3',
         isChecked: false,
@@ -32,43 +36,24 @@ const menuData = ref<(INavItem | INavFolder)[]>([
       },
     ],
   },
-  {
-    type: 'todo-list',
-    title: '列表1',
-    isChecked: false,
-    todoNum: 10,
-  },
-  {
-    type: 'todo-list',
-    title: '列表2',
-    isChecked: false,
-    todoNum: 10,
-  },
-  {
-    type: 'todo-list',
-    title: '列表3',
-    isChecked: false,
-    todoNum: 10,
-  },
-  {
-    type: 'todo-list',
-    title: '列表4',
-    isChecked: false,
-    todoNum: 10,
-  },
 ])
 
 const todoData = ref<ITodoItem[]>()
 
-function handleNavChange(todoListId?: string) {
-  if (todoListId) {
-    getTodoByListId(todoListId).then((resolve) => {})
-  }
+const currentListType = ref<ItemType>('my-day')
+
+function handleNavChange(todoListType: ItemType, todoListId: string) {
+  // getTodoByListId(todoListId).then((resolve) => {})
+  currentListType.value = todoListType
 }
 </script>
 <template>
   <NavMenu :data="menuData" @nav-change="handleNavChange"></NavMenu>
-  <MainBoard></MainBoard>
+  <MainBoard
+    :type="currentListType"
+    :item-data="[]"
+    :group-data="[]"
+  ></MainBoard>
   <!-- <div class="suggestions">[suggestions]</div> -->
 </template>
 <style lang="scss">
