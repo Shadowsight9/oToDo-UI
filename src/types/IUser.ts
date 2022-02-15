@@ -1,4 +1,9 @@
 export interface IUser {
-  token?: string
-  userName: string
+  id: string
+  name: string
+  nickname: string
+  email: string
+  telephone: string
+  avatar: string
+  basicTodoListID: string
 }

@@ -2,10 +2,13 @@
 import NavMenu from '@/components/NavMenu.vue'
 import MainBoard from '@/components/MainBoard.vue'
 import { INavItem, INavFolder, ItemType } from '@/types/INavItem'
-import { ref } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 
 import { getTodoByListId } from '@/apis/todo'
+import { getCurrentUser } from '@/apis/user'
 import { ITodoItem } from '@/types/ITodoItem'
+import { IUser } from '@/types/IUser'
+import { userKey } from '@/store/provideKeys'
 
 const menuData = ref<(INavItem | INavFolder)[]>([
   {
@@ -43,9 +46,21 @@ const todoData = ref<ITodoItem[]>()
 const currentListType = ref<ItemType>('my-day')
 
 function handleNavChange(todoListType: ItemType, todoListId: string) {
-  // getTodoByListId(todoListId).then((resolve) => {})
+  getTodoByListId(todoListId).then((resolve) => {
+    console.log(resolve)
+  })
   currentListType.value = todoListType
 }
+
+const user = ref<IUser>()
+
+onMounted(() => {
+  getCurrentUser().then((resolve) => {
+    user.value = resolve
+  })
+})
+
+provide(userKey, user)
 </script>
 <template>
   <NavMenu :data="menuData" @nav-change="handleNavChange"></NavMenu>

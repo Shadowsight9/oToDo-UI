@@ -9,35 +9,54 @@ import { ref } from 'vue'
 import { ITodoItem, ITimeGroup, ITodoGroup } from '@/types/ITodoItem'
 import type { ItemType } from '@/types/INavItem'
 
-const itemData = ref<ITodoItem>({
-  title: 'string',
-  isCompleted: true,
-  isImportant: false,
-  isInMyDay: false,
-  belongList: 'string',
-  deadline: 0,
-  isSync: true,
-  haveAttachment: true,
-  haveMemo: true,
-})
+const itemData = ref<ITodoItem[]>([
+  {
+    id: '1',
+    title: '测试List1',
+    isCompleted: true,
+    isImportant: false,
+    isInMyDay: false,
+    belongList: '任务',
+    deadline: 0,
+    isSync: true,
+    haveAttachment: true,
+    haveMemo: true,
+  },
+  {
+    id: '2',
+    title: '测试List2',
+    isCompleted: false,
+    isImportant: false,
+    isInMyDay: false,
+    belongList: '任务',
+    deadline: 0,
+    isSync: true,
+    haveAttachment: true,
+    haveMemo: true,
+  },
+])
 
-const groupData = ref<ITimeGroup>({
-  todoNum: 1,
-  isPrevious: true,
-  itemArray: [
-    {
-      title: 'string',
-      isCompleted: true,
-      isImportant: false,
-      isInMyDay: false,
-      belongList: 'string',
-      deadline: 0,
-      isSync: true,
-      haveAttachment: true,
-      haveMemo: true,
-    },
-  ],
-})
+const groupData = ref<ITimeGroup[]>([
+  {
+    id: '3',
+    todoNum: 1,
+    isPrevious: true,
+    itemArray: [
+      {
+        id: '1',
+        title: '时间列表',
+        isCompleted: false,
+        isImportant: false,
+        isInMyDay: false,
+        belongList: '任务',
+        deadline: 0,
+        isSync: true,
+        haveAttachment: true,
+        haveMemo: true,
+      },
+    ],
+  },
+])
 
 const props = defineProps<{
   itemData: ITodoItem[]
@@ -51,8 +70,8 @@ const props = defineProps<{
       <div class="body">
         <BoardHeader :type="props.type" />
         <ul class="todo-list">
-          <TodoItem :data="itemData" />
-          <TodoGroup :data="groupData" />
+          <TodoItem v-for="item in itemData" :key="item.id" :data="item" />
+          <TodoGroup v-for="item in groupData" :key="item.id" :data="item" />
         </ul>
       </div>
       <BoardFooter />

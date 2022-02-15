@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
+import { inject, computed } from 'vue'
+import { userKey } from '@/store/provideKeys'
+
+const user = inject(userKey)
 </script>
 <template>
   <div class="profile">
-    <div class="profile-avatar" title="黄 铮"></div>
-    <div class="profile-account" title="huangzheng@shu.edu.cn">
-      <div class="account-name">黄 铮</div>
+    <div class="profile-avatar"></div>
+    <div class="profile-account">
+      <div class="account-name">{{ user?.name }}</div>
       <div class="account-email">
-        <span> huangzheng@shu.edu.cn </span>
+        <span> {{ user?.email }} </span>
         <SvgIcon class="icon" name="expand" />
       </div>
     </div>

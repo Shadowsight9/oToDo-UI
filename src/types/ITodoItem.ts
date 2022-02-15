@@ -1,4 +1,5 @@
 export interface ITodoItem {
+  id: string
   title: string
   isCompleted?: boolean
   isImportant?: boolean
@@ -11,6 +12,7 @@ export interface ITodoItem {
 }
 
 export interface ITodoGroup {
+  id: string
   todoNum: number
   itemArray: ITodoItem[]
 }

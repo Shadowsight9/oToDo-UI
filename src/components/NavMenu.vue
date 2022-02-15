@@ -7,14 +7,11 @@ import {
   NavFolder,
 } from '@/components/LeftMenu'
 import { INavItem, INavFolder, ItemType } from '@/types/INavItem'
-import { ref, PropType, computed } from 'vue'
+import { ref, computed } from 'vue'
 
-const props = defineProps({
-  data: {
-    type: Object as PropType<(INavItem | INavFolder)[]>,
-    required: true,
-  },
-})
+const props = defineProps<{
+  data: (INavItem | INavFolder)[]
+}>()
 
 const fixedMenuData = ref<(INavItem | INavFolder)[]>([
   {
@@ -46,7 +43,7 @@ const fixedMenuData = ref<(INavItem | INavFolder)[]>([
     todoNum: 0,
   },
   {
-    id: '5',
+    id: '894edbaf-23f6-4d4d-85e6-80ff57ac57ff',
     type: 'task-todo',
     title: '任务',
     isChecked: false,

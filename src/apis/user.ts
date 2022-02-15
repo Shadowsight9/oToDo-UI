@@ -1,5 +1,7 @@
 import token from '@/utils/token'
 import { http } from '@/apis/http'
+import { AxiosResponse } from 'axios'
+import { IUser } from '@/types/IUser'
 
 export const isLoggedIn = () => {
   if (typeof token.getAccessToken() === 'string') {
@@ -19,4 +21,9 @@ export const register = (
     password: password,
     nickname: nickName,
   })
+}
+
+export const getCurrentUser = async () => {
+  const response: AxiosResponse<IUser> = await http.get('/users/current/')
+  return response.data
 }
