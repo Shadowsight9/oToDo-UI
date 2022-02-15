@@ -6,8 +6,7 @@ import {
   NavItem,
   NavFolder,
 } from '@/components/LeftMenu'
-import { INavItem, INavFolder } from '@/types/INavItem'
-
+import { INavItem, INavFolder, ItemType } from '@/types/INavItem'
 import { ref, PropType, computed } from 'vue'
 
 const props = defineProps({
@@ -19,29 +18,39 @@ const props = defineProps({
 
 const fixedMenuData = ref<(INavItem | INavFolder)[]>([
   {
+    id: '1',
     type: 'my-day',
     title: '我的一天',
     isChecked: true,
+    todoNum: 0,
   },
   {
+    id: '2',
     type: 'important-todo',
     title: '重要',
     isChecked: false,
+    todoNum: 0,
   },
   {
+    id: '3',
     type: 'in-plan',
     title: '计划内',
     isChecked: false,
+    todoNum: 0,
   },
   {
+    id: '4',
     type: 'assign-to-me',
     title: '已分配给我',
     isChecked: false,
+    todoNum: 0,
   },
   {
+    id: '5',
     type: 'task-todo',
     title: '任务',
     isChecked: false,
+    todoNum: 0,
   },
 ])
 
@@ -50,7 +59,7 @@ const menuData = computed(() => {
 })
 
 const emit = defineEmits<{
-  (e: 'nav-change', todoListId?: string): void
+  (e: 'nav-change', todoListType: ItemType, todoListId: string): void
 }>()
 
 const clearClick = (dataRef = menuData.value) => {
@@ -74,10 +83,10 @@ const clickHandler = (
       undefined,
       (dataRef[innerIndex] as INavFolder).itemArray
     )
-  } else if ('id' in dataRef[outsideIndex]) {
+  } else {
     clearClick()
     ;(dataRef[outsideIndex] as INavItem).isChecked = true
-    emit('nav-change', (dataRef[outsideIndex] as INavItem).id)
+    emit('nav-change', dataRef[outsideIndex].type, dataRef[outsideIndex].id)
   }
 }
 

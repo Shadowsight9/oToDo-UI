@@ -1,21 +1,23 @@
 export interface INavItem {
-  type?: ItemType
-  id?: string
+  type: ItemType
+  id: string
   title: string
   isChecked: boolean
   todoNum: number
 }
 
 export interface INavFolder {
-  type?: ItemType
+  type: ItemType
+  id: string
   title: string
   itemArray?: INavItem[]
 }
 
-type ItemType =
+export type ItemType =
   | 'my-day'
   | 'important-todo'
   | 'in-plan'
   | 'assign-to-me'
   | 'task-todo'
   | 'todo-list'
+  | 'todo-folder'
