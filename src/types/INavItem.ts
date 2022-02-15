@@ -1,8 +1,14 @@
 export interface INavItem {
   type?: ItemType
+  id?: string
   title: string
-  isChecked?: boolean
-  todoNum?: number
+  isChecked: boolean
+  todoNum: number
+}
+
+export interface INavFolder {
+  type?: ItemType
+  title: string
   itemArray?: INavItem[]
 }
 

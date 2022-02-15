@@ -34,6 +34,13 @@ export const getTodoById = async (id: string) => {
   return resopnse.data
 }
 
+export const getTodoByListId = async (id: string) => {
+  const resopnse: AxiosResponse<ITodoResponse[]> = await http.get(
+    '/todo-lists/' + id + '/todos'
+  )
+  return resopnse.data
+}
+
 // TODO 请传递完整字段
 export const putTodoById = (id: string) => {
   return http.put('/todos/' + id, {})

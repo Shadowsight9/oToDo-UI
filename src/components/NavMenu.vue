@@ -6,15 +6,18 @@ import {
   NavItem,
   NavFolder,
 } from '@/components/LeftMenu'
-import { INavItem } from '@/types/INavItem'
+import { INavItem, INavFolder } from '@/types/INavItem'
 
-import { ref } from 'vue'
+import { ref, PropType, computed } from 'vue'
 
-const searchHandler = (value: string) => {
-  console.log(value)
-}
+const props = defineProps({
+  data: {
+    type: Object as PropType<(INavItem | INavFolder)[]>,
+    required: true,
+  },
+})
 
-const menuData = ref<INavItem[]>([
+const fixedMenuData = ref<(INavItem | INavFolder)[]>([
   {
     type: 'my-day',
     title: '我的一天',
@@ -40,54 +43,46 @@ const menuData = ref<INavItem[]>([
     title: '任务',
     isChecked: false,
   },
-  {
-    title: '测试用组',
-    itemArray: [
-      {
-        type: 'todo-list',
-        title: '组内列表1',
-        isChecked: true,
-        todoNum: 10,
-      },
-      {
-        type: 'todo-list',
-        title: '组内列表2',
-        isChecked: false,
-        todoNum: 10,
-      },
-      {
-        type: 'todo-list',
-        title: '组内列表3',
-        isChecked: false,
-        todoNum: 10,
-      },
-    ],
-  },
 ])
+
+const menuData = computed(() => {
+  return fixedMenuData.value.concat(props.data)
+})
+
+const emit = defineEmits<{
+  (e: 'nav-change', todoListId?: string): void
+}>()
 
 const clearClick = (dataRef = menuData.value) => {
   dataRef.forEach((obj) => {
-    if (obj?.itemArray) {
+    if ('itemArray' in obj) {
       clearClick(obj.itemArray)
-    } else {
+    } else if ('isChecked' in obj) {
       obj.isChecked = false
     }
   })
 }
 
 const clickHandler = (
-  childrenIndex: number,
-  parentIndex?: number,
-  dataRef = menuData.value
+  outsideIndex: number,
+  innerIndex?: number,
+  dataRef: (INavItem | INavFolder)[] = menuData.value
 ) => {
-  if (parentIndex) {
-    clickHandler(childrenIndex, undefined, dataRef[parentIndex].itemArray)
-  } else {
-    // TODO: 改变MainBoard内容
+  if (innerIndex) {
+    clickHandler(
+      outsideIndex,
+      undefined,
+      (dataRef[innerIndex] as INavFolder).itemArray
+    )
+  } else if ('id' in dataRef[outsideIndex]) {
     clearClick()
-
-    dataRef[childrenIndex].isChecked = true
+    ;(dataRef[outsideIndex] as INavItem).isChecked = true
+    emit('nav-change', (dataRef[outsideIndex] as INavItem).id)
   }
+}
+
+const searchHandler = (value: string) => {
+  console.log(value)
 }
 </script>
 <template>
@@ -101,16 +96,19 @@ const clickHandler = (
         <ul>
           <template v-for="(item, index) in menuData" :key="index">
             <NavFolder
-              v-if="item?.itemArray"
+              v-if="'itemArray' in item"
               :title="item.title"
-              :data="item.itemArray"
+              :data="item.itemArray || []"
               :parent-index="index"
               @click="clickHandler"
             />
-            <NavItem v-else :data="item" @click="clickHandler(index)" />
+            <NavItem
+              v-else-if="'isChecked' in item"
+              :data="item"
+              @click="clickHandler(index)"
+            />
+            <hr v-if="index === 4" class="delimiter" />
           </template>
-
-          <hr class="delimiter" />
         </ul>
       </nav>
     </div>
