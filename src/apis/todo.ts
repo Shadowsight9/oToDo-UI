@@ -1,24 +1,24 @@
 import { http } from '@/apis/http'
 
-import { ITodoResponse } from '@/types/ITodo'
+import { ITodo } from '@/types/ITodo'
 import { AxiosResponse } from 'axios'
 
 export const getCurrentImportantTodos = async () => {
-  const resopnse: AxiosResponse<ITodoResponse[]> = await http.get(
+  const resopnse: AxiosResponse<ITodo[]> = await http.get(
     '/users/current/todos/important'
   )
   return resopnse.data
 }
 
 export const getCurrentInPlanTodos = async () => {
-  const resopnse: AxiosResponse<ITodoResponse[]> = await http.get(
+  const resopnse: AxiosResponse<ITodo[]> = await http.get(
     '/users/current/todos/planned'
   )
   return resopnse.data
 }
 
 export const getCurrentUnnotifiedTodos = async () => {
-  const resopnse: AxiosResponse<ITodoResponse[]> = await http.get(
+  const resopnse: AxiosResponse<ITodo[]> = await http.get(
     '/users/current/todos/not-notify'
   )
   return resopnse.data
@@ -30,12 +30,12 @@ export const addTodo = async () => {
 }
 
 export const getTodoById = async (id: string) => {
-  const resopnse: AxiosResponse<ITodoResponse> = await http.get('/todos/' + id)
+  const resopnse: AxiosResponse<ITodo> = await http.get('/todos/' + id)
   return resopnse.data
 }
 
 export const getTodoByListId = async (id: string) => {
-  const resopnse: AxiosResponse<ITodoResponse[]> = await http.get(
+  const resopnse: AxiosResponse<ITodo[]> = await http.get(
     '/todo-lists/' + id + '/todos'
   )
   return resopnse.data

@@ -1,18 +1,20 @@
-export interface ITodoResponse {
+export interface ITodo {
   id: string
   title: string
   content: string
   importance: boolean
-  deadline: string
+  deadline: Date
   notified: boolean
-  notify_at: string
+  notifyAt: Date
   done: boolean
-  done_at: string
-  created_at: string
-  updated_at: string
-  deleted_at: string
-  user_id: string
-  todolist_id: string
+  doneAt: Date
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date
+  userId: string
+  todolistId: string
+  todoRepeatFromID: string
+  todoRepeatPlan: {}
   files: []
   steps: []
 }

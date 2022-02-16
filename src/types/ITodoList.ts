@@ -1,10 +1,10 @@
-export interface ITodoListResponse {
+export interface ITodoList {
   id: string
   name: string
   deletable: boolean
-  created_at: string
-  updated_at: string
-  deleted_at: string
-  user_id: string
-  todo_list_folder_id: string
+  createdAt: string
+  updatedAt: string
+  deletedAt: string
+  userID: string
+  todoListFolderID: string
 }

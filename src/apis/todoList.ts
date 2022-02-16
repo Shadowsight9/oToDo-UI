@@ -1,26 +1,24 @@
 import { http } from '@/apis/http'
 
-import { ITodoListResponse } from '@/types/ITodoList'
+import { ITodoList } from '@/types/ITodoList'
 import { AxiosResponse } from 'axios'
 
 export const getCurrentTodoList = async () => {
-  const resopnse: AxiosResponse<ITodoListResponse[]> = await http.get(
+  const resopnse: AxiosResponse<ITodoList[]> = await http.get(
     '/users/current/todo-lists'
   )
   return resopnse.data
 }
 
 export const getCurrentBasicTodoList = async () => {
-  const resopnse: AxiosResponse<ITodoListResponse[]> = await http.get(
+  const resopnse: AxiosResponse<ITodoList[]> = await http.get(
     '/users/current/todo-lists/basic'
   )
   return resopnse.data
 }
 
 export const getTodoListById = async (id: string) => {
-  const resopnse: AxiosResponse<ITodoListResponse> = await http.get(
-    '/todo-lists/' + id
-  )
+  const resopnse: AxiosResponse<ITodoList> = await http.get('/todo-lists/' + id)
   return resopnse.data
 }
 
