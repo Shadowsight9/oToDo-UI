@@ -6,57 +6,22 @@ import {
   NavItem,
   NavFolder,
 } from '@/components/LeftMenu'
-import { INavItem, INavFolder, ItemType } from '@/types/INavItem'
-import { ref, computed } from 'vue'
+import { INavItem, INavFolder } from '@/types/INavItem'
+import { computed } from 'vue'
+import { fixedMenuData } from '@/types/INavItem'
+
+type TNav = INavItem | INavFolder
 
 const props = defineProps<{
-  data: (INavItem | INavFolder)[]
+  data: TNav[]
 }>()
 
-const fixedMenuData = ref<(INavItem | INavFolder)[]>([
-  {
-    id: '1',
-    type: 'my-day',
-    title: '我的一天',
-    isChecked: true,
-    todoNum: 0,
-  },
-  {
-    id: '2',
-    type: 'important-todo',
-    title: '重要',
-    isChecked: false,
-    todoNum: 0,
-  },
-  {
-    id: '3',
-    type: 'in-plan',
-    title: '计划内',
-    isChecked: false,
-    todoNum: 0,
-  },
-  {
-    id: '4',
-    type: 'assign-to-me',
-    title: '已分配给我',
-    isChecked: false,
-    todoNum: 0,
-  },
-  {
-    id: '894edbaf-23f6-4d4d-85e6-80ff57ac57ff',
-    type: 'task-todo',
-    title: '任务',
-    isChecked: false,
-    todoNum: 0,
-  },
-])
-
 const menuData = computed(() => {
-  return fixedMenuData.value.concat(props.data)
+  return (fixedMenuData.value as TNav[]).concat(props.data)
 })
 
 const emit = defineEmits<{
-  (e: 'nav-change', todoListType: ItemType, todoListId: string): void
+  (e: 'nav-change', todoList: INavItem): void
 }>()
 
 const clearClick = (dataRef = menuData.value) => {
@@ -75,15 +40,13 @@ const clickHandler = (
   dataRef: (INavItem | INavFolder)[] = menuData.value
 ) => {
   if (innerIndex) {
-    clickHandler(
-      outsideIndex,
-      undefined,
-      (dataRef[innerIndex] as INavFolder).itemArray
-    )
+    const insideItem = dataRef[innerIndex] as INavFolder
+    clickHandler(outsideIndex, undefined, insideItem.itemArray)
   } else {
+    const outsideItem = dataRef[outsideIndex] as INavItem
     clearClick()
-    ;(dataRef[outsideIndex] as INavItem).isChecked = true
-    emit('nav-change', dataRef[outsideIndex].type, dataRef[outsideIndex].id)
+    outsideItem.isChecked = true
+    emit('nav-change', outsideItem)
   }
 }
 
@@ -100,7 +63,7 @@ const searchHandler = (value: string) => {
 
       <nav class="nav-menu">
         <ul>
-          <template v-for="(item, index) in menuData" :key="index">
+          <template v-for="(item, index) in menuData" :key="item.id">
             <NavFolder
               v-if="'itemArray' in item"
               :title="item.title"

@@ -1,60 +1,21 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
 import type { ItemType } from '@/types/INavItem'
-import { ref, computed } from 'vue'
-
 const props = withDefaults(
   defineProps<{
     type: ItemType
+    iconName: string
+    title: string
   }>(),
   {
-    type: 'my-day',
+    iconName: 'list',
+    title: '空列表',
   }
 )
-
-const getTitle = (itemType: ItemType) => {
-  switch (itemType) {
-    case 'my-day':
-      return '我的一天'
-    case 'important-todo':
-      return '重要'
-    case 'in-plan':
-      return '计划内'
-    case 'assign-to-me':
-      return '已分配给我'
-    case 'task-todo':
-      return '任务'
-    default:
-      // TODO: 直接根据标题返回
-      return 'To Do List'
-  }
-}
-
-const getIconName = (itemType: string | undefined) => {
-  switch (itemType) {
-    case 'todo-list':
-      return 'list'
-    case 'my-day':
-      return 'sun'
-    case 'important-todo':
-      return 'star'
-    case 'in-plan':
-      return 'plan'
-    case 'assign-to-me':
-      return 'user'
-    case 'task-todo':
-      return 'home'
-    default:
-      return 'list'
-  }
-}
-
-const title = computed(() => getTitle(props.type))
-const iconName = computed(() => getIconName(props.type))
 </script>
 <template>
   <header class="board-header">
-    <template v-if="props.type === 'my-day'">
+    <template v-if="type === 'my-day'">
       <div class="header-title">
         <h1>我的一天</h1>
         <p>2月1日，星期二</p>

@@ -5,9 +5,9 @@ import BoardFooter from '@/components/MainBoard/BoardFooter.vue'
 import BoardHeader from '@/components/MainBoard/BoardHeader.vue'
 import TodoDetail from '@/components/TodoDetail.vue'
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ITodoItem, ITimeGroup, ITodoGroup } from '@/types/ITodoItem'
-import type { ItemType } from '@/types/INavItem'
+import type { INavItem } from '@/types/INavItem'
 
 const itemData = ref<ITodoItem[]>([
   {
@@ -59,16 +59,22 @@ const groupData = ref<ITimeGroup[]>([
 ])
 
 const props = defineProps<{
-  itemData: ITodoItem[]
-  groupData: ITodoGroup[]
-  type: ItemType
+  todoList: INavItem
 }>()
+
+const fetchListData = (todoListID: string) => {}
+
+onMounted(() => {})
 </script>
 <template>
   <div class="main-board">
     <div class="board-wrapper">
       <div class="body">
-        <BoardHeader :type="props.type" />
+        <BoardHeader
+          :type="todoList.type"
+          :icon-name="todoList.iconName"
+          :title="todoList.title"
+        />
         <ul class="todo-list">
           <TodoItem v-for="item in itemData" :key="item.id" :data="item" />
           <TodoGroup v-for="item in groupData" :key="item.id" :data="item" />

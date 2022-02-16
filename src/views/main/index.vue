@@ -1,15 +1,15 @@
 <script lang="ts" setup>
+import { ref, onMounted, provide } from 'vue'
 import NavMenu from '@/components/NavMenu.vue'
 import MainBoard from '@/components/MainBoard.vue'
-import { INavItem, INavFolder, ItemType } from '@/types/INavItem'
-import { ref, onMounted, provide } from 'vue'
-
-import { getTodoByListId } from '@/apis/todo'
+import { OpenMessage } from '@/utils/openComponents'
 import { getCurrentUser } from '@/apis/user'
-import { ITodoItem } from '@/types/ITodoItem'
+import { INavItem, INavFolder, fixedMenuData } from '@/types/INavItem'
 import { IUser } from '@/types/IUser'
 import { userKey } from '@/store/provideKeys'
 
+const user = ref<IUser>()
+const currentNavItem = ref<INavItem>(fixedMenuData.value[0])
 const menuData = ref<(INavItem | INavFolder)[]>([
   {
     type: 'todo-folder',
@@ -41,35 +41,22 @@ const menuData = ref<(INavItem | INavFolder)[]>([
   },
 ])
 
-const todoData = ref<ITodoItem[]>()
-
-const currentListType = ref<ItemType>('my-day')
-
-function handleNavChange(todoListType: ItemType, todoListId: string) {
-  getTodoByListId(todoListId).then((resolve) => {
-    console.log(resolve)
-  })
-  currentListType.value = todoListType
+function handleNavChange(navItem: INavItem) {
+  currentNavItem.value = navItem
 }
 
-const user = ref<IUser>()
-
-onMounted(() => {
-  getCurrentUser().then((resolve) => {
-    user.value = resolve
-  })
+onMounted(async () => {
+  try {
+    user.value = await getCurrentUser()
+  } catch (err) {
+    OpenMessage('获取用户错误', 2)
+  }
 })
-
 provide(userKey, user)
 </script>
 <template>
   <NavMenu :data="menuData" @nav-change="handleNavChange"></NavMenu>
-  <MainBoard
-    :type="currentListType"
-    :item-data="[]"
-    :group-data="[]"
-  ></MainBoard>
-  <!-- <div class="suggestions">[suggestions]</div> -->
+  <MainBoard :todo-list="currentNavItem"></MainBoard>
 </template>
 <style lang="scss">
 #app {
