@@ -9,12 +9,12 @@ enum Api {
   sessionTokenURL = '/sessions/current/tokens',
 }
 
-export const loginSession = async (name: string, pwd: string) => {
+export const loginSession = async (userName: string, password: string) => {
   const resopnse: AxiosResponse<ILoginResponse> = await http.post(
     Api.SessionURL,
     {
-      user_name: name,
-      password: pwd,
+      userName,
+      password,
     },
     {
       headers: {
@@ -22,12 +22,12 @@ export const loginSession = async (name: string, pwd: string) => {
       },
     }
   )
-  const { access_token, expires_in, refresh_token } = resopnse.data
+  const { accessToken, expiresIn, refreshToken } = resopnse.data
 
-  token.setAccessToken(access_token, expires_in)
-  useUserStore().setuserName(name)
-  if (typeof refresh_token == 'string') {
-    token.setRefreshToken(refresh_token)
+  token.setAccessToken(accessToken, expiresIn)
+  useUserStore().setuserName(userName)
+  if (typeof refreshToken == 'string') {
+    token.setRefreshToken(refreshToken)
   }
 }
 
@@ -35,8 +35,8 @@ export const refreshSession = async () => {
   const resopnse: AxiosResponse<ILoginResponse> = await http.post(
     Api.sessionTokenURL
   )
-  const { access_token, expires_in } = resopnse.data
-  token.setAccessToken(access_token, expires_in)
+  const { accessToken, expiresIn } = resopnse.data
+  token.setAccessToken(accessToken, expiresIn)
 }
 
 export const testSession = () => {

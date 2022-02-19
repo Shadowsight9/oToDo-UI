@@ -13,13 +13,13 @@ export const isLoggedIn = () => {
 
 export const register = (
   userName: string,
-  nickName: string,
+  nickname: string,
   password: string
 ) => {
   return http.post('/users/', {
-    user_name: userName,
-    password: password,
-    nickname: nickName,
+    userName,
+    password,
+    nickname,
   })
 }
 

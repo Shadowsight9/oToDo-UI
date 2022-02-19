@@ -80,8 +80,10 @@ const handleRegister = () => {
       loginForm.password = registerForm.password
     })
     .catch((err) => {
-      isLoading.value = false
       OpenMessage(err, 2)
+    })
+    .finally(() => {
+      isLoading.value = false
     })
 }
 </script>

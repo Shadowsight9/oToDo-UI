@@ -11,7 +11,7 @@ export const getCurrentTodoList = async () => {
 }
 
 export const getCurrentBasicTodoList = async () => {
-  const resopnse: AxiosResponse<ITodoList[]> = await http.get(
+  const resopnse: AxiosResponse<ITodoList> = await http.get(
     '/users/current/todo-lists/basic'
   )
   return resopnse.data
