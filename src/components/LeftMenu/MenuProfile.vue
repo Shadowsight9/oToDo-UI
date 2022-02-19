@@ -1,12 +1,41 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
-import { inject, computed } from 'vue'
+import { inject, reactive, ref } from 'vue'
 import { userKey } from '@/store/provideKeys'
+import { IMenuProps } from '@/types/IMouseMenu'
+import { deleteSession } from '@/apis/sessions'
+import { useRouter } from 'vue-router'
+import { OpenMessage } from '@/utils/openComponents'
+import token from '@/utils/token'
+
+const router = useRouter()
 
 const user = inject(userKey)
+
+const listLmbHandler = (index: number) => {
+  switch (index) {
+    case 0:
+      deleteSession()
+        .then(() => {
+          token.removeAllToken()
+          router.push({ name: 'login' })
+        })
+        .catch((err) => OpenMessage(err, 2))
+      break
+    default:
+      return
+  }
+}
+
+const listLmbMenu = reactive<IMenuProps>({
+  data: [{ text: '退出登录', iconName: 'home' }],
+  handler: listLmbHandler,
+})
+
+const pos = ref('bottom')
 </script>
 <template>
-  <div class="profile">
+  <div v-lmb-menu:[pos]="listLmbMenu" class="profile">
     <div class="profile-avatar"></div>
     <div class="profile-account">
       <div class="account-name">{{ user?.name }}</div>
@@ -23,6 +52,7 @@ div.profile {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   height: 80px;
   > * {
     height: 60px;
