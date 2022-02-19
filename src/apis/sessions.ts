@@ -1,6 +1,5 @@
 import { http } from '@/apis/http'
 import token from '@/utils/token'
-import { useUserStore } from '@/store/userStore'
 import { ILoginResponse } from '@/types/ISession'
 import { AxiosResponse } from 'axios'
 
@@ -25,7 +24,6 @@ export const loginSession = async (userName: string, password: string) => {
   const { accessToken, expiresIn, refreshToken } = resopnse.data
 
   token.setAccessToken(accessToken, expiresIn)
-  useUserStore().setuserName(userName)
   if (typeof refreshToken == 'string') {
     token.setRefreshToken(refreshToken)
   }

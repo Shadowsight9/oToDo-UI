@@ -6,18 +6,16 @@ import {
   NavItem,
   NavFolder,
 } from '@/components/LeftMenu'
-import { INavItem, INavFolder } from '@/types/INavItem'
+import { INavItem } from '@/types/INavItem'
 import { computed } from 'vue'
 import { fixedMenuData } from '@/types/INavItem'
 
-type TNav = INavItem | INavFolder
-
 const props = defineProps<{
-  data: TNav[]
+  data: INavItem[]
 }>()
 
 const menuData = computed(() => {
-  return (fixedMenuData.value as TNav[]).concat(props.data)
+  return fixedMenuData.value.concat(props.data)
 })
 
 const emit = defineEmits<{
@@ -26,9 +24,9 @@ const emit = defineEmits<{
 
 const clearClick = (dataRef = menuData.value) => {
   dataRef.forEach((obj) => {
-    if ('itemArray' in obj) {
-      clearClick(obj.itemArray)
-    } else if ('isChecked' in obj) {
+    if (obj.children) {
+      clearClick(obj.children)
+    } else if (obj.isLeaf) {
       obj.isChecked = false
     }
   })
@@ -37,16 +35,14 @@ const clearClick = (dataRef = menuData.value) => {
 const clickHandler = (
   outsideIndex: number,
   innerIndex?: number,
-  dataRef: (INavItem | INavFolder)[] = menuData.value
+  dataRef: INavItem[] = menuData.value
 ) => {
   if (innerIndex) {
-    const insideItem = dataRef[innerIndex] as INavFolder
-    clickHandler(outsideIndex, undefined, insideItem.itemArray)
+    clickHandler(outsideIndex, undefined, dataRef[innerIndex].children)
   } else {
-    const outsideItem = dataRef[outsideIndex] as INavItem
     clearClick()
-    outsideItem.isChecked = true
-    emit('nav-change', outsideItem)
+    dataRef[outsideIndex].isChecked = true
+    emit('nav-change', dataRef[outsideIndex])
   }
 }
 
@@ -65,14 +61,14 @@ const searchHandler = (value: string) => {
         <ul>
           <template v-for="(item, index) in menuData" :key="item.id">
             <NavFolder
-              v-if="'itemArray' in item"
+              v-if="item.children"
               :title="item.name"
-              :data="item.itemArray || []"
+              :data="item.children"
               :parent-index="index"
               @click="clickHandler"
             />
             <NavItem
-              v-else-if="'isChecked' in item"
+              v-else-if="item.isLeaf"
               :data="item"
               @click="clickHandler(index)"
             />

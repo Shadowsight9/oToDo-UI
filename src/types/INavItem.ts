@@ -1,19 +1,18 @@
 import { ref } from 'vue'
 
-export interface INavItem {
-  type: ItemType
-  iconName?: string
+export interface INavItemDTO {
   id: number
   name: string
-  isChecked: boolean
-  todoNum: number
+  isLeaf: boolean
+  count: number
+  children?: INavItem[]
 }
 
-export interface INavFolder {
+export interface INavItem extends INavItemDTO {
+  // VO
   type: ItemType
-  id: number
-  name: string
-  itemArray?: INavItem[]
+  iconName?: string
+  isChecked: boolean
 }
 
 export type ItemType =
@@ -28,42 +27,57 @@ export type ItemType =
 export const fixedMenuData = ref<INavItem[]>([
   {
     id: 1,
+    name: '我的一天',
+    isLeaf: true,
+    count: 0,
     type: 'my-day',
     iconName: 'sun',
-    name: '我的一天',
     isChecked: true,
-    todoNum: 0,
   },
   {
     id: 2,
+    name: '重要',
+    isLeaf: true,
+    count: 0,
     type: 'important-todo',
     iconName: 'star',
-    name: '重要',
     isChecked: false,
-    todoNum: 0,
   },
   {
     id: 3,
+    name: '计划内',
+    isLeaf: true,
+    count: 0,
     type: 'in-plan',
     iconName: 'plan',
-    name: '计划内',
     isChecked: false,
-    todoNum: 0,
   },
   {
     id: 4,
+    name: '已分配给我',
+    isLeaf: true,
+    count: 0,
     type: 'assign-to-me',
     iconName: 'user',
-    name: '已分配给我',
     isChecked: false,
-    todoNum: 0,
   },
   {
     id: 5,
+    name: '任务',
+    isLeaf: true,
+    count: 0,
     type: 'task-todo',
     iconName: 'home',
-    name: '任务',
     isChecked: false,
-    todoNum: 0,
   },
 ])
+
+export function dto2vo(dtoData: INavItemDTO[]) {
+  const voList: INavItem[] = []
+  dtoData.forEach((item) => {
+    const type: ItemType = item.children ? 'todo-folder' : 'todo-list'
+    const voItem: INavItem = { ...item, type, isChecked: false }
+    voList.push(voItem)
+  })
+  return voList
+}

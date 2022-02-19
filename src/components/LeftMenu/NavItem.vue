@@ -10,7 +10,7 @@ defineProps<{
   <li :class="{ checked: data.isChecked }">
     <SvgIcon class="icon" :class="data.type" :name="data.iconName || 'list'" />
     <span class="item-title">{{ data.name }}</span>
-    <span v-if="data.todoNum" class="todo-num">{{ data.todoNum }}</span>
+    <span v-if="data.count" class="todo-num">{{ data.count }}</span>
   </li>
 </template>
 <style scoped lang="scss">

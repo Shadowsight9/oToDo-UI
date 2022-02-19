@@ -4,40 +4,47 @@ import NavMenu from '@/components/NavMenu.vue'
 import MainBoard from '@/components/MainBoard.vue'
 import { OpenMessage } from '@/utils/openComponents'
 import { getCurrentUser } from '@/apis/user'
-import { INavItem, INavFolder, fixedMenuData } from '@/types/INavItem'
+import { INavItem, fixedMenuData } from '@/types/INavItem'
 import { IUser } from '@/types/IUser'
 import { userKey } from '@/store/provideKeys'
 
 const user = ref<IUser>()
 const currentNavItem = ref<INavItem>(fixedMenuData.value[0])
-const menuData = ref<(INavItem | INavFolder)[]>([
+const menuData = ref<INavItem[]>([
   {
-    type: 'todo-folder',
     id: 10,
-    name: '测试用组',
-    itemArray: [
+    name: '测试用文件夹',
+    isLeaf: false,
+    count: 100,
+    children: [
       {
         id: 11,
-        type: 'todo-list',
         name: '组内列表1',
+        isLeaf: true,
+        count: 10,
+        type: 'todo-list',
         isChecked: false,
-        todoNum: 10,
       },
       {
         id: 12,
-        type: 'todo-list',
         name: '组内列表2',
+        isLeaf: true,
+        count: 10,
+        type: 'todo-list',
         isChecked: false,
-        todoNum: 10,
       },
       {
         id: 13,
-        type: 'todo-list',
         name: '组内列表3',
+        isLeaf: true,
+        count: 10,
+        type: 'todo-list',
         isChecked: false,
-        todoNum: 10,
       },
     ],
+    type: 'todo-folder',
+    iconName: 'floder',
+    isChecked: false,
   },
 ])
 
