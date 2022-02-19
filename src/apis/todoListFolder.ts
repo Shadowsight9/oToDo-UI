@@ -10,6 +10,6 @@ export const getCurrentTodoListFolder = async () => {
   return resopnse.data
 }
 
-export const deleteTodoListFolderById = (id: string) => {
+export const deleteTodoListFolderById = (id: number) => {
   return http.delete('/todo-list-folders/' + id)
 }

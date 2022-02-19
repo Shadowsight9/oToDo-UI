@@ -17,11 +17,11 @@ export const getCurrentBasicTodoList = async () => {
   return resopnse.data
 }
 
-export const getTodoListById = async (id: string) => {
+export const getTodoListById = async (id: number) => {
   const resopnse: AxiosResponse<ITodoList> = await http.get('/todo-lists/' + id)
   return resopnse.data
 }
 
-export const deleteTodoListById = (id: string) => {
+export const deleteTodoListById = (id: number) => {
   return http.delete('/todo-lists/' + id)
 }
