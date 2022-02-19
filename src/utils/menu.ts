@@ -42,9 +42,9 @@ export const lmbDirective = (
 
     const VNode = h(MbMenu, {
       data: binding.value.data,
-      onOclick: (index: number) => {
+      onOclick: (index: number, id?: number) => {
         removeElememt(div)
-        binding.value.handler(index)
+        binding.value.handler(index, id)
       },
     })
 

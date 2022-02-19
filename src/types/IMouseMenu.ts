@@ -1,5 +1,6 @@
 export interface IMenuItem {
   text: string
+  id?: number
   iconName: string
 }
 
@@ -12,5 +13,5 @@ export interface IMenuPosition {
 
 export interface IMenuProps {
   data: IMenuItem[]
-  handler: (index: number) => void
+  handler: (index: number, id?: number) => void
 }
