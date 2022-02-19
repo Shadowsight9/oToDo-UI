@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
-import { ref, computed, reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { IMenuProps } from '@/types/IMouseMenu'
-import { boardFooterStore } from '@/store/boardFooterStroe'
-
-const store = boardFooterStore()
 
 const inputStr = ref('')
+const currentSelector = ref()
 
 const listLmbHandler = (index: number) => {
-  store.setlistIndex(index)
+  currentSelector.value = listLmbMenu.data[index]
 }
 
 const listLmbMenu = reactive<IMenuProps>({
@@ -19,9 +17,7 @@ const listLmbMenu = reactive<IMenuProps>({
   ],
   handler: listLmbHandler,
 })
-const currentSelector = computed(() => {
-  return listLmbMenu.data[store.listIndex]
-})
+
 const pos = ref('top')
 </script>
 <template>
