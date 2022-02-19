@@ -1,9 +1,9 @@
 export interface IUser {
-  id: string
+  id: number
   name: string
   nickname: string
   email: string
   telephone: string
   avatar: string
-  basicTodoListID: string
+  basicTodoListID: number
 }

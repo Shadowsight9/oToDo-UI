@@ -7,29 +7,30 @@ import TodoDetail from '@/components/TodoDetail.vue'
 
 import { ref, onMounted } from 'vue'
 import { ITodoItem, ITimeGroup, ITodoGroup } from '@/types/ITodoItem'
-import type { INavItem } from '@/types/INavItem'
+import type { INavItem, ItemType } from '@/types/INavItem'
+import { getCurrentBasicTodoList } from '@/apis/todoList'
+import { getTodoByListId } from '@/apis/todo'
+import { ITodoList } from '@/types/ITodoList'
 
 const itemData = ref<ITodoItem[]>([
   {
-    id: '1',
+    id: 1,
     title: '测试List1',
     isCompleted: true,
     isImportant: false,
     isInMyDay: false,
-    belongList: '任务',
-    deadline: 0,
+    deadline: '',
     isSync: true,
     haveAttachment: true,
     haveMemo: true,
   },
   {
-    id: '2',
+    id: 2,
     title: '测试List2',
     isCompleted: false,
     isImportant: false,
     isInMyDay: false,
-    belongList: '任务',
-    deadline: 0,
+    deadline: '',
     isSync: true,
     haveAttachment: true,
     haveMemo: true,
@@ -38,18 +39,17 @@ const itemData = ref<ITodoItem[]>([
 
 const groupData = ref<ITimeGroup[]>([
   {
-    id: '3',
+    id: 3,
     todoNum: 1,
     isPrevious: true,
     itemArray: [
       {
-        id: '1',
+        id: 1,
         title: '时间列表',
         isCompleted: false,
         isImportant: false,
         isInMyDay: false,
-        belongList: '任务',
-        deadline: 0,
+        deadline: '',
         isSync: true,
         haveAttachment: true,
         haveMemo: true,
@@ -62,7 +62,21 @@ const props = defineProps<{
   todoList: INavItem
 }>()
 
-const fetchListData = (todoListID: string) => {}
+const fetchListData = async (todoListID: string, todoListType: ItemType) => {
+  try {
+    let resList: ITodoList
+    let todoListID: number
+    switch (todoListType) {
+      case 'my-day':
+        resList = await getCurrentBasicTodoList()
+        todoListID = resList.id
+        const resTodos = await getTodoByListId(todoListID)
+        return
+      default:
+        return
+    }
+  } catch {}
+}
 
 onMounted(() => {})
 </script>

@@ -1,18 +1,17 @@
 export interface ITodoItem {
-  id: string
+  id: number
   title: string
   isCompleted?: boolean
   isImportant?: boolean
   isInMyDay?: boolean
-  belongList?: string
-  deadline?: number
+  deadline?: string
   isSync?: boolean
   haveAttachment?: boolean
   haveMemo?: boolean
 }
 
 export interface ITodoGroup {
-  id: string
+  id: number
   todoNum: number
   itemArray: ITodoItem[]
 }

@@ -16,7 +16,7 @@ export const register = (
   nickname: string,
   password: string
 ) => {
-  return http.post('/users/', {
+  return http.post('/users', {
     userName,
     password,
     nickname,
@@ -24,6 +24,6 @@ export const register = (
 }
 
 export const getCurrentUser = async () => {
-  const response: AxiosResponse<IUser> = await http.get('/users/current/')
+  const response: AxiosResponse<IUser> = await http.get('/users/current')
   return response.data
 }

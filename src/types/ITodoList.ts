@@ -1,10 +1,10 @@
 export interface ITodoList {
-  id: string
+  id: number
   name: string
   deletable: boolean
   createdAt: string
   updatedAt: string
   deletedAt: string
-  userID: string
-  todoListFolderID: string
+  userID: number
+  todoListFolderID: number
 }

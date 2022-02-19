@@ -3,7 +3,7 @@ import { ref } from 'vue'
 export interface INavItem {
   type: ItemType
   iconName?: string
-  id: string
+  id: number
   title: string
   isChecked: boolean
   todoNum: number
@@ -11,7 +11,7 @@ export interface INavItem {
 
 export interface INavFolder {
   type: ItemType
-  id: string
+  id: number
   title: string
   itemArray?: INavItem[]
 }
@@ -27,7 +27,7 @@ export type ItemType =
 
 export const fixedMenuData = ref<INavItem[]>([
   {
-    id: '#1',
+    id: 1,
     type: 'my-day',
     iconName: 'sun',
     title: '我的一天',
@@ -35,7 +35,7 @@ export const fixedMenuData = ref<INavItem[]>([
     todoNum: 0,
   },
   {
-    id: '#2',
+    id: 2,
     type: 'important-todo',
     iconName: 'star',
     title: '重要',
@@ -43,7 +43,7 @@ export const fixedMenuData = ref<INavItem[]>([
     todoNum: 0,
   },
   {
-    id: '#3',
+    id: 3,
     type: 'in-plan',
     iconName: 'plan',
     title: '计划内',
@@ -51,7 +51,7 @@ export const fixedMenuData = ref<INavItem[]>([
     todoNum: 0,
   },
   {
-    id: '#4',
+    id: 4,
     type: 'assign-to-me',
     iconName: 'user',
     title: '已分配给我',
@@ -59,7 +59,7 @@ export const fixedMenuData = ref<INavItem[]>([
     todoNum: 0,
   },
   {
-    id: '#5',
+    id: 5,
     type: 'task-todo',
     iconName: 'home',
     title: '任务',
