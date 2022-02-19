@@ -4,7 +4,7 @@ export interface INavItem {
   type: ItemType
   iconName?: string
   id: number
-  title: string
+  name: string
   isChecked: boolean
   todoNum: number
 }
@@ -12,7 +12,7 @@ export interface INavItem {
 export interface INavFolder {
   type: ItemType
   id: number
-  title: string
+  name: string
   itemArray?: INavItem[]
 }
 
@@ -30,7 +30,7 @@ export const fixedMenuData = ref<INavItem[]>([
     id: 1,
     type: 'my-day',
     iconName: 'sun',
-    title: '我的一天',
+    name: '我的一天',
     isChecked: true,
     todoNum: 0,
   },
@@ -38,7 +38,7 @@ export const fixedMenuData = ref<INavItem[]>([
     id: 2,
     type: 'important-todo',
     iconName: 'star',
-    title: '重要',
+    name: '重要',
     isChecked: false,
     todoNum: 0,
   },
@@ -46,7 +46,7 @@ export const fixedMenuData = ref<INavItem[]>([
     id: 3,
     type: 'in-plan',
     iconName: 'plan',
-    title: '计划内',
+    name: '计划内',
     isChecked: false,
     todoNum: 0,
   },
@@ -54,7 +54,7 @@ export const fixedMenuData = ref<INavItem[]>([
     id: 4,
     type: 'assign-to-me',
     iconName: 'user',
-    title: '已分配给我',
+    name: '已分配给我',
     isChecked: false,
     todoNum: 0,
   },
@@ -62,7 +62,7 @@ export const fixedMenuData = ref<INavItem[]>([
     id: 5,
     type: 'task-todo',
     iconName: 'home',
-    title: '任务',
+    name: '任务',
     isChecked: false,
     todoNum: 0,
   },

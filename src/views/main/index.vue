@@ -13,27 +13,27 @@ const currentNavItem = ref<INavItem>(fixedMenuData.value[0])
 const menuData = ref<(INavItem | INavFolder)[]>([
   {
     type: 'todo-folder',
-    id: '1',
-    title: '测试用组',
+    id: 10,
+    name: '测试用组',
     itemArray: [
       {
-        id: 'a1',
+        id: 11,
         type: 'todo-list',
-        title: '组内列表1',
+        name: '组内列表1',
         isChecked: false,
         todoNum: 10,
       },
       {
-        id: 'a2',
+        id: 12,
         type: 'todo-list',
-        title: '组内列表2',
+        name: '组内列表2',
         isChecked: false,
         todoNum: 10,
       },
       {
-        id: 'a3',
+        id: 13,
         type: 'todo-list',
-        title: '组内列表3',
+        name: '组内列表3',
         isChecked: false,
         todoNum: 10,
       },

@@ -87,7 +87,7 @@ onMounted(() => {})
         <BoardHeader
           :type="todoList.type"
           :icon-name="todoList.iconName"
-          :title="todoList.title"
+          :title="todoList.name"
         />
         <ul class="todo-list">
           <TodoItem v-for="item in itemData" :key="item.id" :data="item" />

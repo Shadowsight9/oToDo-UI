@@ -66,7 +66,7 @@ const searchHandler = (value: string) => {
           <template v-for="(item, index) in menuData" :key="item.id">
             <NavFolder
               v-if="'itemArray' in item"
-              :title="item.title"
+              :title="item.name"
               :data="item.itemArray || []"
               :parent-index="index"
               @click="clickHandler"
