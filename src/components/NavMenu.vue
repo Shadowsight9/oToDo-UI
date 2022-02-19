@@ -23,9 +23,9 @@ const emit = defineEmits<{
 
 const clearClick = (dataRef = menuData.value) => {
   dataRef.forEach((obj) => {
-    if (obj.children) {
+    if (!obj.isLeaf) {
       clearClick(obj.children)
-    } else if (obj.isLeaf) {
+    } else {
       obj.isChecked = false
     }
   })
@@ -60,17 +60,13 @@ const searchHandler = (value: string) => {
         <ul>
           <template v-for="(item, index) in menuData" :key="item.id">
             <NavFolder
-              v-if="item.children"
+              v-if="!item.isLeaf"
               :title="item.name"
-              :data="item.children"
+              :data="item.children || []"
               :parent-index="index"
               @click="clickHandler"
             />
-            <NavItem
-              v-else-if="item.isLeaf"
-              :data="item"
-              @click="clickHandler(index)"
-            />
+            <NavItem v-else :data="item" @click="clickHandler(index)" />
             <hr v-if="index === 4" class="delimiter" />
           </template>
         </ul>
