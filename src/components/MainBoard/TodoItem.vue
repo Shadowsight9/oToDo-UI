@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
 import { PropType } from 'vue'
-import { ITodoItem } from '@/types/ITodoItem'
+import { ITodo } from '@/types/ITodo'
 defineProps({
   data: {
-    type: Object as PropType<ITodoItem>,
+    type: Object as PropType<ITodo>,
     required: true,
   },
 })
@@ -13,48 +13,45 @@ defineProps({
   <li class="todo-item">
     <SvgIcon
       class="icon tick"
-      :class="{ 'tick-completed': data.isCompleted }"
+      :class="{ 'tick-completed': data.done }"
       name="check"
     />
     <div class="todo-info">
-      <div
-        class="todo-text"
-        :class="{ 'todo-text-completed': data.isCompleted }"
-      >
+      <div class="todo-text" :class="{ 'todo-text-completed': data.done }">
         {{ data.title }}
       </div>
       <div class="todo-detail">
-        <template v-if="data.isInMyDay">
+        <template v-if="false">
           <SvgIcon class="icon" name="sun" />
           <span>我的一天</span>
           <span>•</span>
         </template>
-        <template v-if="data.belongList">
+        <!-- <template v-if="data">
           <SvgIcon class="icon" name="list" />
           <span>{{ data.belongList }}</span>
           <span>•</span>
-        </template>
+        </template> -->
         <template v-if="data.deadline">
           <SvgIcon class="icon calendar" name="calendar" />
-          <span>2月19日，周六</span>
+          <span>{{ data.deadline }}</span>
           <span>•</span>
         </template>
-        <template v-if="data.isSync">
+        <!-- <template v-if="data.isSync">
           <SvgIcon class="icon loop" name="loop" />
           <span>•</span>
-        </template>
-        <template v-if="data.haveAttachment">
+        </template> -->
+        <!-- <template v-if="data.haveAttachment">
           <SvgIcon class="icon loop" name="paperclip" />
           <span>•</span>
         </template>
         <template v-if="data.haveMemo">
           <SvgIcon class="icon loop" name="note" />
           <span>•</span>
-        </template>
+        </template> -->
       </div>
     </div>
 
-    <SvgIcon v-if="data.isImportant" class="icon" name="star-solid" />
+    <SvgIcon v-if="data.importance" class="icon" name="star-solid" />
     <SvgIcon v-else class="icon" name="star" />
   </li>
 </template>

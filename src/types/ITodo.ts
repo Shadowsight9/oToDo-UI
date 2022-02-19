@@ -1,20 +1,46 @@
 export interface ITodo {
   id: number
   title: string
-  content: string
+  memo: string
   importance: boolean
-  deadline: Date
+  deadline: string | null
   notified: boolean
-  notifyAt: Date
+  notifyAt: string | null
   done: boolean
-  doneAt: Date
-  createdAt: Date
-  updatedAt: Date
-  deletedAt: Date
-  userId: string
-  todolistId: string
-  todoRepeatFromID: string
-  todoRepeatPlan: {}
-  files: []
-  steps: []
+  doneAt: string | null
+  createdAt: string
+  updatedAt: string
+  userId: number
+  todolistId: number
+  todoRepeatFromID: number | null
+  todoRepeatPlan: ITodoRepeatPlan
+  steps: ITodoStep[] | null
+}
+
+interface ITodoRepeatPlan {
+  id: number
+  createdAt: string
+  updatedAt: string
+  type: string
+  interval: number
+  before: string | null
+  weekday: number
+}
+
+interface ITodoStep {
+  id: number
+  createdAt: string
+  updatedAt: string
+  name: string
+  done: boolean
+  doneAt: string
+  todoID: number
+}
+
+export interface IFixedTodo {
+  basicListData: ITodo[]
+  dailyListData: ITodo[]
+  plannedListData: ITodo[]
+  importantListData: ITodo[]
+  unnotifiedListData: ITodo[]
 }

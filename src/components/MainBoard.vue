@@ -5,37 +5,17 @@ import BoardFooter from '@/components/MainBoard/BoardFooter.vue'
 import BoardHeader from '@/components/MainBoard/BoardHeader.vue'
 import TodoDetail from '@/components/TodoDetail.vue'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch, toRef } from 'vue'
 import { ITodoItem, ITimeGroup, ITodoGroup } from '@/types/ITodoItem'
 import type { INavItem, ItemType } from '@/types/INavItem'
-import { getCurrentBasicTodoList } from '@/apis/todoList'
+import { getCurrentDailyTodos } from '@/apis/todo'
 import { getTodoByListId } from '@/apis/todo'
 import { ITodoList } from '@/types/ITodoList'
+import { ITodo } from '@/types/ITodo'
+import { useDataStore } from '@/store/dataStore'
 
-const itemData = ref<ITodoItem[]>([
-  {
-    id: 1,
-    title: '测试List1',
-    isCompleted: true,
-    isImportant: false,
-    isInMyDay: false,
-    deadline: '',
-    isSync: true,
-    haveAttachment: true,
-    haveMemo: true,
-  },
-  {
-    id: 2,
-    title: '测试List2',
-    isCompleted: false,
-    isImportant: false,
-    isInMyDay: false,
-    deadline: '',
-    isSync: true,
-    haveAttachment: true,
-    haveMemo: true,
-  },
-])
+const s = useDataStore()
+const currentTodos = ref<ITodo[]>()
 
 const groupData = ref<ITimeGroup[]>([
   {
@@ -62,23 +42,31 @@ const props = defineProps<{
   todoList: INavItem
 }>()
 
-const fetchListData = async (todoListID: string, todoListType: ItemType) => {
-  try {
-    let resList: ITodoList
-    let todoListID: number
-    switch (todoListType) {
-      case 'my-day':
-        resList = await getCurrentBasicTodoList()
-        todoListID = resList.id
-        const resTodos = await getTodoByListId(todoListID)
-        return
-      default:
-        return
-    }
-  } catch {}
+const fetchListData = async (todoListID: number, todoListType: ItemType) => {
+  switch (todoListType) {
+    case 'my-day':
+      currentTodos.value = s.fixedTodoData?.dailyListData
+      break
+    case 'in-plan':
+      currentTodos.value = s.fixedTodoData?.plannedListData
+      break
+    case 'important-todo':
+      currentTodos.value = s.fixedTodoData?.importantListData
+      break
+    case 'task-todo':
+      currentTodos.value = s.fixedTodoData?.basicListData
+      break
+    case 'todo-list':
+      currentTodos.value = await getTodoByListId(todoListID)
+      break
+    default:
+      return
+  }
 }
 
-onMounted(() => {})
+watch(toRef(props, 'todoList'), (newVal) => {
+  fetchListData(newVal.id, newVal.type)
+})
 </script>
 <template>
   <div class="main-board">
@@ -90,8 +78,8 @@ onMounted(() => {})
           :title="todoList.name"
         />
         <ul class="todo-list">
-          <TodoItem v-for="item in itemData" :key="item.id" :data="item" />
-          <TodoGroup v-for="item in groupData" :key="item.id" :data="item" />
+          <TodoItem v-for="item in currentTodos" :key="item.id" :data="item" />
+          <!-- <TodoGroup v-for="item in groupData" :key="item.id" :data="item" /> -->
         </ul>
       </div>
       <BoardFooter />

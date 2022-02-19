@@ -5,9 +5,11 @@ import MainBoard from '@/components/MainBoard.vue'
 import { OpenMessage } from '@/utils/openComponents'
 import { getCurrentUser } from '@/apis/user'
 import { getCurrentMenu } from '@/apis/menu'
+import { getCurrentFixedTodos } from '@/apis/todo'
 import { INavItem, fixedMenuData } from '@/types/INavItem'
 import { useDataStore } from '@/store/dataStore'
 
+const s = useDataStore()
 const currentNavItem = ref<INavItem>(fixedMenuData.value[0])
 
 function handleNavChange(navItem: INavItem) {
@@ -16,8 +18,10 @@ function handleNavChange(navItem: INavItem) {
 
 onMounted(async () => {
   try {
-    useDataStore().setUser(await getCurrentUser())
-    useDataStore().setNavTree(await getCurrentMenu())
+    s.setUser(await getCurrentUser())
+    s.setNavTree(await getCurrentMenu())
+
+    s.setFixedTodo(await getCurrentFixedTodos())
   } catch (err) {
     OpenMessage('请求服务器信息失败！', 2)
   }

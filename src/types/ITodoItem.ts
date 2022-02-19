@@ -1,10 +1,10 @@
 export interface ITodoItem {
   id: number
   title: string
-  isCompleted?: boolean
-  isImportant?: boolean
-  isInMyDay?: boolean
-  deadline?: string
+  isCompleted?: boolean //done
+  isImportant?: boolean //importance
+  isInMyDay?: boolean //
+  deadline?: string //deadline
   isSync?: boolean
   haveAttachment?: boolean
   haveMemo?: boolean

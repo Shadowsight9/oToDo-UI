@@ -5,7 +5,7 @@ export interface INavItemDTO {
   name: string
   isLeaf: boolean
   count: number
-  children?: INavItem[]
+  children?: INavItemDTO[]
 }
 
 export interface INavItem extends INavItemDTO {
@@ -13,6 +13,7 @@ export interface INavItem extends INavItemDTO {
   type: ItemType
   iconName?: string
   isChecked: boolean
+  children?: INavItem[]
 }
 
 export type ItemType =
@@ -75,8 +76,19 @@ export const fixedMenuData = ref<INavItem[]>([
 export function menuDTO2VO(dtoData: INavItemDTO[]) {
   const voList: INavItem[] = []
   dtoData.forEach((item) => {
-    const type: ItemType = item.children ? 'todo-folder' : 'todo-list'
-    const voItem: INavItem = { ...item, type, isChecked: false }
+    let voItem: INavItem
+
+    if (item.children) {
+      voItem = {
+        ...item,
+        type: 'todo-folder',
+        isChecked: false,
+        children: menuDTO2VO(item.children),
+      }
+    } else {
+      voItem = { ...item, type: 'todo-list', isChecked: false, children: [] }
+    }
+
     voList.push(voItem)
   })
   return voList
