@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
-import { inject, reactive, ref } from 'vue'
-import { userKey } from '@/store/provideKeys'
+import { reactive, ref } from 'vue'
+import { useDataStore } from '@/store/dataStore'
 import { IMenuProps } from '@/types/IMouseMenu'
 import { deleteSession } from '@/apis/sessions'
 import { useRouter } from 'vue-router'
 import { OpenMessage } from '@/utils/openComponents'
 import token from '@/utils/token'
 
+const dataStore = useDataStore()
 const router = useRouter()
-
-const user = inject(userKey)
 
 const listLmbHandler = (index: number) => {
   switch (index) {
@@ -38,9 +37,9 @@ const pos = ref('bottom')
   <div v-lmb-menu:[pos]="listLmbMenu" class="profile">
     <div class="profile-avatar"></div>
     <div class="profile-account">
-      <div class="account-name">{{ user?.name }}</div>
+      <div class="account-name">{{ dataStore.userData?.name }}</div>
       <div class="account-email">
-        <span> {{ user?.email }} </span>
+        <span> {{ dataStore.userData?.email }} </span>
         <SvgIcon class="icon" name="expand" />
       </div>
     </div>

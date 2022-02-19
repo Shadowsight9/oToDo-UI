@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { IUser } from '@/types/IUser'
-import { INavItemDTO, dto2vo, INavItem } from '@/types/INavItem'
+import { IUser, IUserDTO, userDTO2VO } from '@/types/IUser'
+import { INavItemDTO, menuDTO2VO, INavItem } from '@/types/INavItem'
 
 export interface dataStore {
   userData: IUser | null
@@ -13,11 +13,11 @@ export const useDataStore = defineStore('useData', {
     menuData: [],
   }),
   actions: {
-    setUser(data: IUser) {
-      this.userData = data
+    setUser(data: IUserDTO) {
+      this.userData = userDTO2VO(data)
     },
     setMenuTree(data: INavItemDTO[]) {
-      this.menuData = dto2vo(data)
+      this.menuData = menuDTO2VO(data)
     },
   },
 })

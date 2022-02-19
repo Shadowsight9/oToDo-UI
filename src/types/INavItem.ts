@@ -72,7 +72,7 @@ export const fixedMenuData = ref<INavItem[]>([
   },
 ])
 
-export function dto2vo(dtoData: INavItemDTO[]) {
+export function menuDTO2VO(dtoData: INavItemDTO[]) {
   const voList: INavItem[] = []
   dtoData.forEach((item) => {
     const type: ItemType = item.children ? 'todo-folder' : 'todo-list'

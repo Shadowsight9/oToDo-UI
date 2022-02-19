@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-import { ref, onMounted, provide } from 'vue'
+import { ref, onMounted } from 'vue'
 import NavMenu from '@/components/NavMenu.vue'
 import MainBoard from '@/components/MainBoard.vue'
 import { OpenMessage } from '@/utils/openComponents'
 import { getCurrentUser } from '@/apis/user'
 import { INavItem, fixedMenuData } from '@/types/INavItem'
-import { IUser } from '@/types/IUser'
-import { userKey } from '@/store/provideKeys'
+import { useDataStore } from '@/store/dataStore'
 
-const user = ref<IUser>()
 const currentNavItem = ref<INavItem>(fixedMenuData.value[0])
 const menuData = ref<INavItem[]>([
   {
@@ -54,12 +52,12 @@ function handleNavChange(navItem: INavItem) {
 
 onMounted(async () => {
   try {
-    user.value = await getCurrentUser()
+    const user = await getCurrentUser()
+    useDataStore().setUser(user)
   } catch (err) {
     OpenMessage('获取用户错误', 2)
   }
 })
-provide(userKey, user)
 </script>
 <template>
   <NavMenu :data="menuData" @nav-change="handleNavChange"></NavMenu>

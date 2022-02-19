@@ -1,4 +1,4 @@
-export interface IUser {
+interface IUserBase {
   id: number
   name: string
   nickname: string
@@ -6,4 +6,21 @@ export interface IUser {
   telephone?: string
   avatar?: string
   basicTodoListID?: number
+}
+
+export interface IUserDTO extends IUserBase {
+  createdAt: string
+  updatedAt: string
+}
+
+export interface IUser extends IUserBase {
+  createdAt: Date
+  updatedAt: Date
+}
+
+export function userDTO2VO(dtoData: IUserDTO) {
+  const createdAt = new Date(dtoData.createdAt)
+  const updatedAt = new Date(dtoData.updatedAt)
+  const voData: IUser = { ...dtoData, createdAt, updatedAt }
+  return voData
 }
