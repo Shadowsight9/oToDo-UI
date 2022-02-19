@@ -9,13 +9,12 @@ import {
 import { INavItem } from '@/types/INavItem'
 import { computed } from 'vue'
 import { fixedMenuData } from '@/types/INavItem'
+import { useDataStore } from '@/store/dataStore'
 
-const props = defineProps<{
-  data: INavItem[]
-}>()
+const dataStore = useDataStore()
 
 const menuData = computed(() => {
-  return fixedMenuData.value.concat(props.data)
+  return fixedMenuData.value.concat(dataStore.navData)
 })
 
 const emit = defineEmits<{

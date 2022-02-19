@@ -4,47 +4,11 @@ import NavMenu from '@/components/NavMenu.vue'
 import MainBoard from '@/components/MainBoard.vue'
 import { OpenMessage } from '@/utils/openComponents'
 import { getCurrentUser } from '@/apis/user'
+import { getCurrentMenu } from '@/apis/menu'
 import { INavItem, fixedMenuData } from '@/types/INavItem'
 import { useDataStore } from '@/store/dataStore'
 
 const currentNavItem = ref<INavItem>(fixedMenuData.value[0])
-const menuData = ref<INavItem[]>([
-  {
-    id: 10,
-    name: '测试用文件夹',
-    isLeaf: false,
-    count: 100,
-    children: [
-      {
-        id: 11,
-        name: '组内列表1',
-        isLeaf: true,
-        count: 10,
-        type: 'todo-list',
-        isChecked: false,
-      },
-      {
-        id: 12,
-        name: '组内列表2',
-        isLeaf: true,
-        count: 10,
-        type: 'todo-list',
-        isChecked: false,
-      },
-      {
-        id: 13,
-        name: '组内列表3',
-        isLeaf: true,
-        count: 10,
-        type: 'todo-list',
-        isChecked: false,
-      },
-    ],
-    type: 'todo-folder',
-    iconName: 'floder',
-    isChecked: false,
-  },
-])
 
 function handleNavChange(navItem: INavItem) {
   currentNavItem.value = navItem
@@ -52,15 +16,15 @@ function handleNavChange(navItem: INavItem) {
 
 onMounted(async () => {
   try {
-    const user = await getCurrentUser()
-    useDataStore().setUser(user)
+    useDataStore().setUser(await getCurrentUser())
+    useDataStore().setNavTree(await getCurrentMenu())
   } catch (err) {
-    OpenMessage('获取用户错误', 2)
+    OpenMessage('请求服务器信息失败！', 2)
   }
 })
 </script>
 <template>
-  <NavMenu :data="menuData" @nav-change="handleNavChange"></NavMenu>
+  <NavMenu @nav-change="handleNavChange"></NavMenu>
   <MainBoard :todo-list="currentNavItem"></MainBoard>
 </template>
 <style lang="scss">
