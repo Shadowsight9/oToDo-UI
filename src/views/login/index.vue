@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { loginSession } from '@/apis/sessions'
 import { OpenMessage } from '@/utils/openComponents'
 import { register } from '@/apis/user'
+import { goOAuthLogin, tryGithubOAuthLogin } from './oauth'
 
 const router = useRouter()
 const isLogin = ref(true)
@@ -13,10 +14,12 @@ interface FormItem {
   val: string
   isValid: boolean
 }
+
 interface LoginForm {
   username: FormItem
   password: FormItem
 }
+
 interface RegisterForm {
   username: FormItem
   password: FormItem
@@ -86,6 +89,15 @@ const handleRegister = () => {
       isLoading.value = false
     })
 }
+
+onMounted(async () => {
+  const q = router.currentRoute.value.query
+  if (typeof q['code'] == 'string' && typeof q['state'] == 'string') {
+    if (await tryGithubOAuthLogin(q['code'], q['state'])) {
+      router.push('/')
+    }
+  }
+})
 </script>
 <template>
   <div class="wrapper">
@@ -131,6 +143,11 @@ const handleRegister = () => {
             placeholder="密码"
           />
         </div>
+
+        <p class="change-mode">
+          第三方登陆 <a @click="goOAuthLogin">GitHub</a>
+        </p>
+
         <p class="change-mode">没有账户？<a @click="changeMode">创建一个</a></p>
       </div>
       <div class="button-group">
