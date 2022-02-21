@@ -8,11 +8,12 @@ import TodoDetail from '@/components/TodoDetail.vue'
 import { ref, onMounted, watch, toRef } from 'vue'
 import { ITodoItem, ITimeGroup, ITodoGroup } from '@/types/ITodoItem'
 import type { INavItem, ItemType } from '@/types/INavItem'
-import { getCurrentDailyTodos } from '@/apis/todo'
+import { addTodo, getCurrentDailyTodos } from '@/apis/todo'
 import { getTodoByListId } from '@/apis/todo'
 import { ITodoList } from '@/types/ITodoList'
-import { ITodo } from '@/types/ITodo'
+import { ITodo, ITodoSubmit } from '@/types/ITodo'
 import { useDataStore } from '@/store/dataStore'
+import { OpenMessage } from '@/utils/openComponents'
 
 const s = useDataStore()
 const currentTodos = ref<ITodo[]>()
@@ -43,30 +44,44 @@ const props = defineProps<{
 }>()
 
 const fetchListData = async (todoListID: number, todoListType: ItemType) => {
-  switch (todoListType) {
-    case 'my-day':
-      currentTodos.value = s.fixedTodoData?.dailyListData
-      break
-    case 'in-plan':
-      currentTodos.value = s.fixedTodoData?.plannedListData
-      break
-    case 'important-todo':
-      currentTodos.value = s.fixedTodoData?.importantListData
-      break
-    case 'task-todo':
-      currentTodos.value = s.fixedTodoData?.basicListData
-      break
-    case 'todo-list':
-      currentTodos.value = await getTodoByListId(todoListID)
-      break
-    default:
-      return
+  try {
+    switch (todoListType) {
+      case 'my-day':
+        currentTodos.value = s.fixedTodoData?.dailyListData
+        break
+      case 'in-plan':
+        currentTodos.value = s.fixedTodoData?.plannedListData
+        break
+      case 'important-todo':
+        currentTodos.value = s.fixedTodoData?.importantListData
+        break
+      case 'task-todo':
+        currentTodos.value = s.fixedTodoData?.basicListData
+        break
+      case 'todo-list':
+        currentTodos.value = await getTodoByListId(todoListID)
+        break
+      default:
+        return
+    }
+  } catch (err) {
+    OpenMessage('请求数据失败', 2)
   }
 }
 
 watch(toRef(props, 'todoList'), (newVal) => {
   fetchListData(newVal.id, newVal.type)
 })
+
+const submitHandler = (item: ITodoSubmit) => {
+  addTodo(item)
+    .then(() => {
+      fetchListData(props.todoList.id, props.todoList.type)
+    })
+    .catch(() => {
+      OpenMessage('添加Todo失败')
+    })
+}
 </script>
 <template>
   <div class="main-board">
@@ -82,7 +97,7 @@ watch(toRef(props, 'todoList'), (newVal) => {
           <!-- <TodoGroup v-for="item in groupData" :key="item.id" :data="item" /> -->
         </ul>
       </div>
-      <BoardFooter />
+      <BoardFooter :current-list="todoList" @submit="submitHandler" />
     </div>
     <div class="aside">
       <TodoDetail />

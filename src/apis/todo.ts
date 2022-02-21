@@ -1,6 +1,6 @@
 import { http } from '@/apis/http'
 
-import { IFixedTodo, ITodo } from '@/types/ITodo'
+import { IFixedTodo, ITodo, ITodoSubmit } from '@/types/ITodo'
 import { AxiosResponse } from 'axios'
 
 export const getCurrentDailyTodos = async () => {
@@ -49,9 +49,8 @@ export const getCurrentFixedTodos = async (): Promise<IFixedTodo> => {
   }
 }
 
-// TODO
-export const addTodo = async () => {
-  return http.post('/todos', {})
+export const addTodo = async (data: ITodoSubmit) => {
+  return http.post('/todos', data)
 }
 
 export const getTodoById = async (id: number) => {

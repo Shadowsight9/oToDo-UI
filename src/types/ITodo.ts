@@ -44,3 +44,16 @@ export interface IFixedTodo {
   importantListData: ITodo[]
   unnotifiedListData: ITodo[]
 }
+
+export interface ITodoSubmit {
+  title: string
+  memo?: string
+  importance?: boolean
+  deadline?: string
+  notified?: boolean
+  notifyAt?: string
+  doneAt?: string
+  todolistId: number
+  todoRepeatPlan?: ITodoRepeatPlan
+  steps?: ITodoStep[] | null
+}

@@ -10,10 +10,11 @@ defineProps({
   },
 })
 
-const emit = defineEmits(['oclick'])
+const emit =
+  defineEmits<{ (event: 'oclick', index: number, id?: number): void }>()
 
-const clickHandler = (index: number) => {
-  emit('oclick', index)
+const clickHandler = (index: number, id?: number) => {
+  emit('oclick', index, id)
 }
 </script>
 <template>
@@ -22,7 +23,7 @@ const clickHandler = (index: number) => {
       v-for="(item, index) in data"
       :key="index"
       class="pop-item"
-      @click.stop="clickHandler(index)"
+      @click.stop="clickHandler(index, item.id)"
     >
       <SvgIcon class="icon" :name="item.iconName" />
       <span class="item-text">{{ item.text }}</span>

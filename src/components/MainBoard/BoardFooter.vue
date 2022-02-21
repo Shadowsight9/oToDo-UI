@@ -1,22 +1,54 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed, watch, toRef } from 'vue'
 import { IMenuProps } from '@/types/IMouseMenu'
+import { ITodo, ITodoSubmit } from '@/types/ITodo'
+import { useDataStore } from '@/store/dataStore'
+import { INavItem, ItemType } from '@/types/INavItem'
 
+const s = useDataStore()
+
+const emit = defineEmits<{
+  (event: 'submit', submitTodo: ITodoSubmit): void
+}>()
+
+const props = defineProps<{
+  currentList: INavItem
+}>()
 const inputStr = ref('')
-const currentSelector = ref()
 
-const listLmbHandler = (index: number) => {
-  currentSelector.value = listLmbMenu.data[index]
-}
+const selectListTitle = ref(props.currentList.name)
+const selectListID = ref(props.currentList.id)
+
+watch(toRef(props, 'currentList'), (newVal) => {
+  selectListID.value = newVal.id
+  selectListTitle.value = newVal.name
+})
+
+const listArray = computed(() => {
+  return s.todoListData.map((item) => ({
+    text: item.name,
+    id: item.id,
+    iconName: 'list',
+  }))
+})
 
 const listLmbMenu = reactive<IMenuProps>({
-  data: [
-    { text: 'hello', iconName: 'home' },
-    { text: 'hello', iconName: 'list' },
-  ],
-  handler: listLmbHandler,
+  data: listArray.value,
+  handler: (index: number, id?: number) => {
+    selectListTitle.value = listLmbMenu.data[index].text
+    selectListID.value = id || -1
+  },
 })
+
+const inputHandler = () => {
+  const todo: ITodoSubmit = {
+    title: inputStr.value,
+    todolistId: selectListID.value,
+  }
+  emit('submit', todo)
+  inputStr.value = ''
+}
 
 const pos = ref('top')
 </script>
@@ -24,11 +56,16 @@ const pos = ref('top')
   <footer class="footer">
     <div class="add-todo">
       <div id="icon" name="check"></div>
-      <input v-model="inputStr" class="add-todo-input" type="text" />
+      <input
+        v-model="inputStr"
+        class="add-todo-input"
+        type="text"
+        @keyup.enter="inputHandler"
+      />
       <div v-show="true" class="selector">
         <div v-lmb-menu:[pos]="listLmbMenu" class="list-selector">
           <SvgIcon class="icon" name="list"></SvgIcon>
-          <span class="list-text">{{ currentSelector }}</span>
+          <span class="list-text">{{ selectListTitle }}</span>
         </div>
         <div class="calender-selector">
           <SvgIcon class="icon" name="calendar"></SvgIcon>

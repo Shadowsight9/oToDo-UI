@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia'
 import { IUser, IUserDTO, userDTO2VO } from '@/types/IUser'
 import { INavItemDTO, menuDTO2VO, INavItem } from '@/types/INavItem'
-import { ITodo, IFixedTodo } from '@/types/ITodo'
+import { IFixedTodo } from '@/types/ITodo'
+import { ITodoList } from '@/types/ITodoList'
 
 export interface dataStore {
   userData: IUser | null
   navData: INavItem[]
   fixedTodoData: IFixedTodo | null
+  todoListData: ITodoList[]
 }
 
 export const useDataStore = defineStore('useData', {
@@ -14,6 +16,7 @@ export const useDataStore = defineStore('useData', {
     userData: null,
     navData: [],
     fixedTodoData: null,
+    todoListData: [],
   }),
   actions: {
     setUser(data: IUserDTO) {
@@ -24,6 +27,9 @@ export const useDataStore = defineStore('useData', {
     },
     setFixedTodo(data: IFixedTodo) {
       this.fixedTodoData = data
+    },
+    setTodoList(data: ITodoList[]) {
+      this.todoListData = data
     },
   },
 })

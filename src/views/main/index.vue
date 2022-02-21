@@ -8,6 +8,7 @@ import { getCurrentMenu } from '@/apis/menu'
 import { getCurrentFixedTodos } from '@/apis/todo'
 import { INavItem, fixedMenuData } from '@/types/INavItem'
 import { useDataStore } from '@/store/dataStore'
+import { getCurrentTodoList } from '@/apis/todoList'
 
 const s = useDataStore()
 const currentNavItem = ref<INavItem>(fixedMenuData.value[0])
@@ -20,7 +21,7 @@ onMounted(async () => {
   try {
     s.setUser(await getCurrentUser())
     s.setNavTree(await getCurrentMenu())
-
+    s.setTodoList(await getCurrentTodoList())
     s.setFixedTodo(await getCurrentFixedTodos())
   } catch (err) {
     OpenMessage('请求服务器信息失败！', 2)
