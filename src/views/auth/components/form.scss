@@ -1,0 +1,122 @@
+@import '@/assets/styles/variables.module.scss';
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $login-background;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $login-from-background;
+    max-width: 380px;
+    width: calc(100% - 40px);
+    min-height: 330px;
+    box-shadow: 0 2px 6px $light-transparency;
+    padding: 0 40px;
+
+    @media (max-width: 768px) {
+      height: 100%;
+      width: 100vw;
+    }
+
+    .img-loading {
+      width: calc(100% + 80px);
+      visibility: hidden;
+    }
+    .hidden {
+      visibility: unset;
+    }
+
+    .img-logo {
+      height: 80px;
+      width: min-content;
+      object-fit: contain;
+      margin-top: 40px;
+    }
+    h1 {
+      margin: 10px 0 0 10px;
+      font-size: $font-size-xxlarge;
+    }
+    .img-logo,
+    h1 {
+      align-self: flex-start;
+    }
+
+    .input-group {
+      width: 98%;
+      .group-row {
+        margin: 20px 0;
+        p {
+          display: none;
+        }
+        input {
+          display: block;
+          width: 100%;
+          height: 25px;
+          padding: 6px;
+          border: 0;
+          border-bottom: 1px solid $medium-transparency;
+          outline: none;
+          font-size: $font-size-large;
+          &:hover {
+            border-bottom: 1px solid $deep-transparency;
+          }
+        }
+      }
+
+      .group-wearning {
+        p {
+          display: unset;
+          font-size: $font-size-medium;
+          color: $red;
+        }
+        input,
+        input:hover {
+          border-bottom: 1.5px solid $red;
+        }
+      }
+
+      .change-mode {
+        font-size: $font-size-medium;
+        margin: 0;
+        a {
+          color: $royal-blue;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+            color: $slate-gray;
+          }
+        }
+      }
+    }
+
+    .button-group {
+      margin-top: 10px;
+      margin-bottom: 40px;
+      align-self: flex-end;
+      input {
+        background-color: $royal-blue;
+        color: $pure-white;
+        height: 36px;
+        width: 100px;
+        border: 0;
+        float: right;
+        &:hover {
+          background-color: $dark-blue;
+          cursor: pointer;
+        }
+        &:disabled {
+          background-color: $light-gray;
+          color: $slate-gray;
+          cursor: wait;
+        }
+      }
+    }
+  }
+}

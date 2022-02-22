@@ -2,8 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { isLoggedIn } from '@/apis/user'
 import { TokenTimer } from '@/apis/timer/tokenTimer'
 
-import Login from '@/views/login/index.vue'
 import Main from '@/views/main/index.vue'
+import Login from '@/views/auth/Login.vue'
+import Register from '@/views/auth/Register.vue'
 
 const routes = [
   {
@@ -16,6 +17,12 @@ const routes = [
     path: '/login',
     component: Login,
     name: 'login',
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/register',
+    component: Register,
+    name: 'register',
     meta: { requiresAuth: false },
   },
 ]
