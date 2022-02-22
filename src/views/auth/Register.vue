@@ -4,10 +4,10 @@ import { OpenMessage } from '@/utils/openComponents'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import OButton from './components/Button.vue'
-import oCard from './components/Card.vue'
+import OCard from './components/Card.vue'
 import { FormItem, validForm } from './components/form'
-import oInput from './components/Input.vue'
-import oLink from './components/Link.vue'
+import OInput from './components/Input.vue'
+import OLink from './components/Link.vue'
 
 const router = useRouter()
 const isLoading = ref(false)
@@ -55,9 +55,9 @@ const handleRegister = () => {
 </script>
 
 <template>
-  <oCard title="oToDo Register" :loading="isLoading">
+  <OCard title="oToDo Register" :loading="isLoading">
     <template #default>
-      <oInput
+      <OInput
         v-model="registerForm.username.val"
         :valid="registerForm.username.isValid"
         :loading="isLoading"
@@ -66,7 +66,7 @@ const handleRegister = () => {
         placeholder="用户名、电子邮件、电话或 Skype"
       />
 
-      <oInput
+      <OInput
         v-model="registerForm.nickname.val"
         :valid="registerForm.nickname.isValid"
         :loading="isLoading"
@@ -75,7 +75,7 @@ const handleRegister = () => {
         placeholder="昵称"
       />
 
-      <oInput
+      <OInput
         v-model="registerForm.password.val"
         :valid="registerForm.password.isValid"
         :loading="isLoading"
@@ -85,11 +85,11 @@ const handleRegister = () => {
         placeholder="密码"
       />
 
-      <oLink title="已经有了账户？" event="去登录" @click="redirectToLogin" />
+      <OLink title="已经有了账户？" event="去登录" @click="redirectToLogin" />
     </template>
 
     <template #footer>
       <OButton title="登录" :loading="isLoading" @click="handleRegister" />
     </template>
-  </oCard>
+  </OCard>
 </template>
