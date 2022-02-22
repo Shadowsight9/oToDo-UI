@@ -4,6 +4,7 @@ import { OpenMessage } from '@/utils/openComponents'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { FormItem, validForm } from './components/form'
+import OButton from './components/Button.vue'
 
 const router = useRouter()
 const isLoading = ref(false)
@@ -124,14 +125,7 @@ const handleRegister = () => {
         </p>
       </div>
 
-      <div class="button-group">
-        <input
-          type="submit"
-          value="注册"
-          :disabled="isLoading"
-          @click.prevent="handleRegister"
-        />
-      </div>
+      <OButton title="登录" :loading="isLoading" @click="handleRegister" />
     </form>
   </div>
 </template>

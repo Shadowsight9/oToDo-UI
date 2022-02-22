@@ -39,10 +39,12 @@
       object-fit: contain;
       margin-top: 40px;
     }
+
     h1 {
       margin: 10px 0 0 10px;
       font-size: $font-size-xxlarge;
     }
+
     .img-logo,
     h1 {
       align-self: flex-start;
@@ -50,11 +52,14 @@
 
     .input-group {
       width: 98%;
+
       .group-row {
         margin: 20px 0;
+
         p {
           display: none;
         }
+
         input {
           display: block;
           width: 100%;
@@ -64,6 +69,7 @@
           border-bottom: 1px solid $medium-transparency;
           outline: none;
           font-size: $font-size-large;
+
           &:hover {
             border-bottom: 1px solid $deep-transparency;
           }
@@ -76,6 +82,7 @@
           font-size: $font-size-medium;
           color: $red;
         }
+
         input,
         input:hover {
           border-bottom: 1.5px solid $red;
@@ -85,36 +92,15 @@
       .change-mode {
         font-size: $font-size-medium;
         margin: 0;
+
         a {
           color: $royal-blue;
+
           cursor: pointer;
           &:hover {
             text-decoration: underline;
             color: $slate-gray;
           }
-        }
-      }
-    }
-
-    .button-group {
-      margin-top: 10px;
-      margin-bottom: 40px;
-      align-self: flex-end;
-      input {
-        background-color: $royal-blue;
-        color: $pure-white;
-        height: 36px;
-        width: 100px;
-        border: 0;
-        float: right;
-        &:hover {
-          background-color: $dark-blue;
-          cursor: pointer;
-        }
-        &:disabled {
-          background-color: $light-gray;
-          color: $slate-gray;
-          cursor: wait;
         }
       }
     }

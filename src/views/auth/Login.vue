@@ -5,11 +5,12 @@ import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { FormItem, validForm } from './components/form'
 import { goOAuthLogin, tryGithubOAuthLogin } from './components/oauth'
+import OButton from './components/Button.vue'
 
 const router = useRouter()
 const isLoading = ref(false)
 
-const loginForm = reactive<{
+const form = reactive<{
   username: FormItem
   password: FormItem
 }>({
@@ -23,11 +24,12 @@ const changeMode = () => {
 
 const handleLogin = () => {
   isLoading.value = true
-  if (validForm(loginForm) === false) {
+  if (validForm(form) === false) {
     isLoading.value = false
     return
   }
-  loginSession(loginForm.username.val, loginForm.password.val)
+
+  loginSession(form.username.val, form.password.val)
     .then(() => router.push('/'))
     .catch((err) => {
       isLoading.value = false
@@ -39,7 +41,7 @@ onMounted(async () => {
   const q = router.currentRoute.value.query
 
   if (typeof q['username'] == 'string') {
-    loginForm.username.val = q['username']
+    form.username.val = q['username']
   }
 
   if (
@@ -67,32 +69,35 @@ onMounted(async () => {
         src="@/assets/images/oToDo-logo.jpg"
         alt="oToDo-logo"
       />
+
       <h1>oToDo Login</h1>
+
       <div class="input-group">
         <div
           class="group-row"
-          :class="{ 'group-wearning': !loginForm.username.isValid }"
+          :class="{ 'group-wearning': !form.username.isValid }"
         >
           <p>请输入有效的电子邮件地址、电话号码或 Skype 用户名</p>
 
           <input
             id="username"
-            v-model="loginForm.username.val"
+            v-model="form.username.val"
             type="text"
             name="username"
             :disabled="isLoading"
             placeholder="用户名、电子邮件、电话或 Skype"
           />
         </div>
+
         <div
           class="group-row"
-          :class="{ 'group-wearning': !loginForm.password.isValid }"
+          :class="{ 'group-wearning': !form.password.isValid }"
         >
           <p>请输入有效的密码</p>
 
           <input
             id="password"
-            v-model="loginForm.password.val"
+            v-model="form.password.val"
             type="password"
             name="password"
             :disabled="isLoading"
@@ -106,14 +111,8 @@ onMounted(async () => {
 
         <p class="change-mode">没有账户？<a @click="changeMode">创建一个</a></p>
       </div>
-      <div class="button-group">
-        <input
-          type="submit"
-          value="登录"
-          :disabled="isLoading"
-          @click.prevent="handleLogin"
-        />
-      </div>
+
+      <OButton title="登录" :loading="isLoading" @click="handleLogin" />
     </form>
   </div>
 </template>
