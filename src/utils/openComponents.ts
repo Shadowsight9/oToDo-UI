@@ -30,10 +30,13 @@ export const OpenDialog = (
   render(VNode, div)
 }
 
-export const OpenMessage = (content: string, time = 1) => {
+export const OpenMessage = (content: string | Error, time = 1) => {
   const div = document.createElement('div')
   div.setAttribute('class', 'o-message')
   document.body.appendChild(div)
+  if (typeof content !== 'string') {
+    content = content.message
+  }
   const VNode = h(OMessage, {
     mountDom: div,
     content,
