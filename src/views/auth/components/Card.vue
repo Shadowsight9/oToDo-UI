@@ -27,7 +27,9 @@ const props = defineProps<{
         <slot></slot>
       </div>
 
-      <slot name="footer"></slot>
+      <div class="button-group">
+        <slot name="footer"></slot>
+      </div>
     </form>
   </div>
 </template>
@@ -88,6 +90,12 @@ const props = defineProps<{
 
     .input-group {
       width: 98%;
+    }
+
+    .button-group {
+      margin-top: 10px;
+      margin-bottom: 40px;
+      align-self: flex-end;
     }
   }
 }
