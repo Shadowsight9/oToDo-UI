@@ -23,7 +23,11 @@ const props = defineProps<{
 
       <h1>{{ props.title }}</h1>
 
-      <slot></slot>
+      <div class="input-group">
+        <slot></slot>
+      </div>
+
+      <slot name="footer"></slot>
     </form>
   </div>
 </template>
@@ -80,6 +84,10 @@ const props = defineProps<{
     .img-logo,
     h1 {
       align-self: flex-start;
+    }
+
+    .input-group {
+      width: 98%;
     }
   }
 }

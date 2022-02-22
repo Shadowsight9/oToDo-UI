@@ -4,8 +4,10 @@ import { OpenMessage } from '@/utils/openComponents'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import OButton from './components/Button.vue'
+import oCard from './components/Card.vue'
 import { FormItem, validForm } from './components/form'
-import oForm from './components/Form.vue'
+import oInput from './components/Input.vue'
+import oLink from './components/Link.vue'
 
 const router = useRouter()
 const isLoading = ref(false)
@@ -20,12 +22,9 @@ const registerForm = reactive<{
   nickname: { val: '', isValid: true },
 })
 
-const changeMode = (username?: string) => {
+const redirectToLogin = (username?: string) => {
   if (username) {
-    router.push({
-      path: '/login',
-      query: { username },
-    })
+    router.push({ path: '/login', query: { username } })
   } else {
     router.push('/login')
   }
@@ -37,13 +36,14 @@ const handleRegister = () => {
     isLoading.value = false
     return
   }
+
   register(
     registerForm.username.val,
     registerForm.nickname.val,
     registerForm.password.val
   )
     .then(() => {
-      changeMode(registerForm.username.val)
+      redirectToLogin(registerForm.username.val)
     })
     .catch((err) => {
       OpenMessage(err, 2)
@@ -55,65 +55,41 @@ const handleRegister = () => {
 </script>
 
 <template>
-  <oForm title="oToDo Register" :loading="isLoading">
-    <div class="input-group">
-      <div
-        class="group-row"
-        :class="{ 'group-wearning': !registerForm.username.isValid }"
-      >
-        <p>请输入有效的电子邮件地址、电话号码或 Skype 用户名</p>
+  <oCard title="oToDo Register" :loading="isLoading">
+    <template #default>
+      <oInput
+        v-model="registerForm.username.val"
+        :valid="registerForm.username.isValid"
+        :loading="isLoading"
+        title="请输入有效的电子邮件地址、电话号码或 Skype 用户名"
+        name="username"
+        placeholder="用户名、电子邮件、电话或 Skype"
+      />
 
-        <input
-          id="username"
-          v-model="registerForm.username.val"
-          type="text"
-          name="username"
-          :disabled="isLoading"
-          placeholder="用户名、电子邮件、电话或 Skype"
-        />
-      </div>
+      <oInput
+        v-model="registerForm.nickname.val"
+        :valid="registerForm.nickname.isValid"
+        :loading="isLoading"
+        title="请输入有效的昵称"
+        name="nickname"
+        placeholder="昵称"
+      />
 
-      <div
-        class="group-row"
-        :class="{ 'group-wearning': !registerForm.nickname.isValid }"
-      >
-        <p>请输入有效的昵称</p>
+      <oInput
+        v-model="registerForm.password.val"
+        :valid="registerForm.password.isValid"
+        :loading="isLoading"
+        title="请输入有效的密码"
+        type="password"
+        name="password"
+        placeholder="密码"
+      />
 
-        <input
-          id="nickname"
-          v-model="registerForm.nickname.val"
-          type="text"
-          name="nickname"
-          :disabled="isLoading"
-          placeholder="昵称"
-        />
-      </div>
+      <oLink title="已经有了账户？" event="去登录" @click="redirectToLogin" />
+    </template>
 
-      <div
-        class="group-row"
-        :class="{ 'group-wearning': !registerForm.password.isValid }"
-      >
-        <p>请输入有效的密码</p>
-
-        <input
-          id="password"
-          v-model="registerForm.password.val"
-          type="password"
-          name="password"
-          :disabled="isLoading"
-          placeholder="密码"
-        />
-      </div>
-
-      <p class="change-mode">
-        已经有了账户？<a @click="() => changeMode()">去登录</a>
-      </p>
-    </div>
-
-    <OButton title="登录" :loading="isLoading" @click="handleRegister" />
-  </oForm>
+    <template #footer>
+      <OButton title="登录" :loading="isLoading" @click="handleRegister" />
+    </template>
+  </oCard>
 </template>
-
-<style scoped lang="scss">
-@import './components/form.scss';
-</style>

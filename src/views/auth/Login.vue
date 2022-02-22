@@ -4,8 +4,10 @@ import { OpenMessage } from '@/utils/openComponents'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import OButton from './components/Button.vue'
+import oCard from './components/Card.vue'
 import { FormItem, validForm } from './components/form'
-import oForm from './components/Form.vue'
+import oInput from './components/Input.vue'
+import oLink from './components/Link.vue'
 import { goOAuthLogin, tryGithubOAuthLogin } from './components/oauth'
 
 const router = useRouter()
@@ -19,7 +21,7 @@ const form = reactive<{
   password: { val: '', isValid: true },
 })
 
-const changeMode = () => {
+const redirectToRegister = () => {
   router.push('/register')
 }
 
@@ -56,49 +58,33 @@ onMounted(async () => {
 </script>
 
 <template>
-  <oForm :loading="isLoading" title="oToDo Login">
-    <div class="input-group">
-      <div
-        class="group-row"
-        :class="{ 'group-wearning': !form.username.isValid }"
-      >
-        <p>请输入有效的电子邮件地址、电话号码或 Skype 用户名</p>
+  <oCard :loading="isLoading" title="oToDo Login">
+    <template #default>
+      <oInput
+        v-model="form.username.val"
+        :valid="form.username.isValid"
+        :loading="isLoading"
+        title="请输入有效的电子邮件地址、电话号码或 Skype 用户名"
+        name="username"
+        placeholder="用户名、电子邮件、电话或 Skype"
+      />
 
-        <input
-          id="username"
-          v-model="form.username.val"
-          type="text"
-          name="username"
-          :disabled="isLoading"
-          placeholder="用户名、电子邮件、电话或 Skype"
-        />
-      </div>
+      <oInput
+        v-model="form.password.val"
+        :valid="form.password.isValid"
+        :loading="isLoading"
+        title="请输入有效的密码"
+        type="password"
+        name="password"
+        placeholder="密码"
+      />
 
-      <div
-        class="group-row"
-        :class="{ 'group-wearning': !form.password.isValid }"
-      >
-        <p>请输入有效的密码</p>
+      <oLink title="第三方登陆" event="GitHub" @click="goOAuthLogin" />
+      <oLink title="没有账户？" event="创建一个" @click="redirectToRegister" />
+    </template>
 
-        <input
-          id="password"
-          v-model="form.password.val"
-          type="password"
-          name="password"
-          :disabled="isLoading"
-          placeholder="密码"
-        />
-      </div>
-
-      <p class="change-mode">第三方登陆 <a @click="goOAuthLogin">GitHub</a></p>
-
-      <p class="change-mode">没有账户？<a @click="changeMode">创建一个</a></p>
-    </div>
-
-    <OButton title="登录" :loading="isLoading" @click="handleLogin" />
-  </oForm>
+    <template #footer>
+      <OButton title="登录" :loading="isLoading" @click="handleLogin" />
+    </template>
+  </oCard>
 </template>
-
-<style scoped lang="scss">
-@import './components/form.scss';
-</style>
