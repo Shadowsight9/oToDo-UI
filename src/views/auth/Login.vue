@@ -47,12 +47,18 @@ onMounted(async () => {
     form.username.val = q['username']
   }
 
-  if (
-    typeof q['code'] == 'string' &&
-    typeof q['state'] == 'string' &&
-    (await tryGithubOAuthLogin(q['code'], q['state']))
-  ) {
-    router.push('/')
+  if (typeof q['code'] == 'string' && typeof q['state'] == 'string') {
+    isLoading.value = true
+    tryGithubOAuthLogin(q['code'], q['state'])
+      .then(() => {
+        router.push('/')
+      })
+      .catch((err) => {
+        OpenMessage(err, 2)
+      })
+      .finally(() => {
+        isLoading.value = false
+      })
   }
 })
 </script>

@@ -10,14 +10,6 @@ export async function goOAuthLogin() {
   }
 }
 
-export async function tryGithubOAuthLogin(
-  code: string,
-  state: string
-): Promise<boolean> {
-  try {
-    await loginByGithubOAuth(code, state)
-    return true
-  } catch (e) {
-    return false
-  }
+export function tryGithubOAuthLogin(code: string, state: string) {
+  return loginByGithubOAuth(code, state)
 }
