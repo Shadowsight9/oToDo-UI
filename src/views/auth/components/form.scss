@@ -1,107 +1,55 @@
 @import '@/assets/styles/variables.module.scss';
 
-.wrapper {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: $login-background;
+.input-group {
+  width: 98%;
 
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: $login-from-background;
-    max-width: 380px;
-    width: calc(100% - 40px);
-    min-height: 330px;
-    box-shadow: 0 2px 6px $light-transparency;
-    padding: 0 40px;
+  .group-row {
+    margin: 20px 0;
 
-    @media (max-width: 768px) {
-      height: 100%;
-      width: 100vw;
+    p {
+      display: none;
     }
 
-    .img-loading {
-      width: calc(100% + 80px);
-      visibility: hidden;
-    }
-    .hidden {
-      visibility: unset;
-    }
+    input {
+      display: block;
+      width: 100%;
+      height: 25px;
+      padding: 6px;
+      border: 0;
+      border-bottom: 1px solid $medium-transparency;
+      outline: none;
+      font-size: $font-size-large;
 
-    .img-logo {
-      height: 80px;
-      width: min-content;
-      object-fit: contain;
-      margin-top: 40px;
-    }
-
-    h1 {
-      margin: 10px 0 0 10px;
-      font-size: $font-size-xxlarge;
-    }
-
-    .img-logo,
-    h1 {
-      align-self: flex-start;
-    }
-
-    .input-group {
-      width: 98%;
-
-      .group-row {
-        margin: 20px 0;
-
-        p {
-          display: none;
-        }
-
-        input {
-          display: block;
-          width: 100%;
-          height: 25px;
-          padding: 6px;
-          border: 0;
-          border-bottom: 1px solid $medium-transparency;
-          outline: none;
-          font-size: $font-size-large;
-
-          &:hover {
-            border-bottom: 1px solid $deep-transparency;
-          }
-        }
+      &:hover {
+        border-bottom: 1px solid $deep-transparency;
       }
+    }
+  }
 
-      .group-wearning {
-        p {
-          display: unset;
-          font-size: $font-size-medium;
-          color: $red;
-        }
+  .group-wearning {
+    p {
+      display: unset;
+      font-size: $font-size-medium;
+      color: $red;
+    }
 
-        input,
-        input:hover {
-          border-bottom: 1.5px solid $red;
-        }
-      }
+    input,
+    input:hover {
+      border-bottom: 1.5px solid $red;
+    }
+  }
 
-      .change-mode {
-        font-size: $font-size-medium;
-        margin: 0;
+  .change-mode {
+    font-size: $font-size-medium;
+    margin: 0;
 
-        a {
-          color: $royal-blue;
+    a {
+      color: $royal-blue;
 
-          cursor: pointer;
-          &:hover {
-            text-decoration: underline;
-            color: $slate-gray;
-          }
-        }
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+        color: $slate-gray;
       }
     }
   }

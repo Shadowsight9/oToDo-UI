@@ -3,9 +3,10 @@ import { loginSession } from '@/apis/sessions'
 import { OpenMessage } from '@/utils/openComponents'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { FormItem, validForm } from './components/form'
-import { goOAuthLogin, tryGithubOAuthLogin } from './components/oauth'
 import OButton from './components/Button.vue'
+import { FormItem, validForm } from './components/form'
+import oForm from './components/Form.vue'
+import { goOAuthLogin, tryGithubOAuthLogin } from './components/oauth'
 
 const router = useRouter()
 const isLoading = ref(false)
@@ -55,66 +56,47 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="wrapper">
-    <form class="login-box">
-      <img
-        class="img-loading"
-        :class="{ hidden: isLoading }"
-        src="@/assets/images/logging-in.gif"
-        alt="logging-in"
-      />
+  <oForm :loading="isLoading" title="oToDo Login">
+    <div class="input-group">
+      <div
+        class="group-row"
+        :class="{ 'group-wearning': !form.username.isValid }"
+      >
+        <p>请输入有效的电子邮件地址、电话号码或 Skype 用户名</p>
 
-      <img
-        class="img-logo"
-        src="@/assets/images/oToDo-logo.jpg"
-        alt="oToDo-logo"
-      />
-
-      <h1>oToDo Login</h1>
-
-      <div class="input-group">
-        <div
-          class="group-row"
-          :class="{ 'group-wearning': !form.username.isValid }"
-        >
-          <p>请输入有效的电子邮件地址、电话号码或 Skype 用户名</p>
-
-          <input
-            id="username"
-            v-model="form.username.val"
-            type="text"
-            name="username"
-            :disabled="isLoading"
-            placeholder="用户名、电子邮件、电话或 Skype"
-          />
-        </div>
-
-        <div
-          class="group-row"
-          :class="{ 'group-wearning': !form.password.isValid }"
-        >
-          <p>请输入有效的密码</p>
-
-          <input
-            id="password"
-            v-model="form.password.val"
-            type="password"
-            name="password"
-            :disabled="isLoading"
-            placeholder="密码"
-          />
-        </div>
-
-        <p class="change-mode">
-          第三方登陆 <a @click="goOAuthLogin">GitHub</a>
-        </p>
-
-        <p class="change-mode">没有账户？<a @click="changeMode">创建一个</a></p>
+        <input
+          id="username"
+          v-model="form.username.val"
+          type="text"
+          name="username"
+          :disabled="isLoading"
+          placeholder="用户名、电子邮件、电话或 Skype"
+        />
       </div>
 
-      <OButton title="登录" :loading="isLoading" @click="handleLogin" />
-    </form>
-  </div>
+      <div
+        class="group-row"
+        :class="{ 'group-wearning': !form.password.isValid }"
+      >
+        <p>请输入有效的密码</p>
+
+        <input
+          id="password"
+          v-model="form.password.val"
+          type="password"
+          name="password"
+          :disabled="isLoading"
+          placeholder="密码"
+        />
+      </div>
+
+      <p class="change-mode">第三方登陆 <a @click="goOAuthLogin">GitHub</a></p>
+
+      <p class="change-mode">没有账户？<a @click="changeMode">创建一个</a></p>
+    </div>
+
+    <OButton title="登录" :loading="isLoading" @click="handleLogin" />
+  </oForm>
 </template>
 
 <style scoped lang="scss">
