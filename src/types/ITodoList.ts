@@ -1,9 +1,9 @@
 export interface ITodoList {
-  id: number
+  id: BigInt
   name: string
   isSharing: boolean
   createdAt: string
   updatedAt: string
-  userID: number
-  todoListFolderID: number
+  userID: BigInt
+  todoListFolderID: BigInt
 }

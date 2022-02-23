@@ -1,8 +1,8 @@
 export interface ITodoListFolderResponse {
-  id: number
+  id: BigInt
   name: string
   createdAt: string
   updatedAt: string
   deletedAt: string
-  userID: number
+  userID: BigInt
 }

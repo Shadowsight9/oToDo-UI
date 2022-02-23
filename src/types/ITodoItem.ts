@@ -1,5 +1,5 @@
 export interface ITodoItem {
-  id: number
+  id: BigInt
   title: string
   isCompleted?: boolean //done
   isImportant?: boolean //importance
@@ -11,18 +11,21 @@ export interface ITodoItem {
 }
 
 export interface ITodoGroup {
-  id: number
+  id: BigInt
   todoNum: number
   itemArray: ITodoItem[]
 }
+
 // 已完成 未完成
 export interface ICompletedGroup extends ITodoGroup {
   isCompleted: boolean
 }
+
 // 先前 稍后
 export interface ITimeGroup extends ITodoGroup {
   isPrevious: boolean
 }
+
 // 列表名
 export interface IListGroup extends ITodoGroup {
   listName: string

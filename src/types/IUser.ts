@@ -1,11 +1,11 @@
 interface IUserBase {
-  id: number
+  id: BigInt
   name: string
   nickname: string
   email?: string
   telephone?: string
   avatar?: string
-  basicTodoListID?: number
+  basicTodoListID?: BigInt
 }
 
 export interface IUserDTO extends IUserBase {

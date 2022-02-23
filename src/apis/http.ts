@@ -1,10 +1,13 @@
+import token from '@/utils/token'
 import axios, {
-  AxiosInstance,
   AxiosError,
+  AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios'
-import token from '@/utils/token'
+import jsonBigInt from 'json-bigint'
+
+const JSONBig = jsonBigInt({ useNativeBigInt: true })
 
 export class Http {
   private static instance: Http
@@ -14,7 +17,9 @@ export class Http {
     this.axiosInstance = axios.create({
       baseURL: '/api',
       timeout: 10000,
+      transformResponse: [(data) => JSONBig.parse(data)],
     })
+
     this.initInterceptors()
   }
 
@@ -25,17 +30,18 @@ export class Http {
     return Http.instance
   }
 
-  private requestSuccess = (config: AxiosRequestConfig<any>) => {
+  private requestSuccess(config: AxiosRequestConfig<any>) {
     if (config.headers && config.headers.needToken !== false) {
       config.headers['Authorization'] = 'Bearer ' + token.getAccessToken()
     }
     return config
   }
-  private requestFail = (error: any) => {
+
+  private requestFail(error: any) {
     Promise.reject(error.toJSON())
   }
 
-  private responseSuccess = (response: AxiosResponse<any, any>) => {
+  private responseSuccess(response: AxiosResponse<any, any>) {
     // 检查响应头中是否含有Authorization字段
     if (response.headers && response.headers.authorization) {
       const jwtString = response.headers.authorization.split(' ')[1]
@@ -44,7 +50,7 @@ export class Http {
     return Promise.resolve(response)
   }
 
-  private responseFail = (error: AxiosError) => {
+  private responseFail(error: AxiosError) {
     const res = error.response
     if (res) {
       switch (res.status) {
@@ -78,6 +84,7 @@ export class Http {
     }
     return Promise.reject(error)
   }
+
   private initInterceptors() {
     this.axiosInstance.defaults.headers.post['Content-Type'] =
       'application/x-www-form-urlencoded'

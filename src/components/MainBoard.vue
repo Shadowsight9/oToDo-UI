@@ -20,12 +20,12 @@ const currentTodos = ref<ITodo[]>()
 
 const groupData = ref<ITimeGroup[]>([
   {
-    id: 3,
+    id: 3n,
     todoNum: 1,
     isPrevious: true,
     itemArray: [
       {
-        id: 1,
+        id: 1n,
         title: '时间列表',
         isCompleted: false,
         isImportant: false,
@@ -43,7 +43,7 @@ const props = defineProps<{
   todoList: INavItem
 }>()
 
-const fetchListData = async (todoListID: number, todoListType: ItemType) => {
+const fetchListData = async (todoListID: BigInt, todoListType: ItemType) => {
   try {
     switch (todoListType) {
       case 'my-day':
@@ -93,7 +93,11 @@ const submitHandler = (item: ITodoSubmit) => {
           :title="todoList.name"
         />
         <ul class="todo-list">
-          <TodoItem v-for="item in currentTodos" :key="item.id" :data="item" />
+          <TodoItem
+            v-for="item in currentTodos"
+            :key="item.id.toString()"
+            :data="item"
+          />
           <!-- <TodoGroup v-for="item in groupData" :key="item.id" :data="item" /> -->
         </ul>
       </div>
