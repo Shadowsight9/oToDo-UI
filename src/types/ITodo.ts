@@ -1,5 +1,5 @@
 export interface ITodo {
-  id: number
+  id: BigInt
   title: string
   memo: string
   importance: boolean
@@ -10,15 +10,15 @@ export interface ITodo {
   doneAt: string | null
   createdAt: string
   updatedAt: string
-  userId: number
-  todolistId: number
-  todoRepeatFromID: number | null
+  userId: BigInt
+  todolistId: BigInt
+  todoRepeatFromID: BigInt | null
   todoRepeatPlan: ITodoRepeatPlan
   steps: ITodoStep[] | null
 }
 
 interface ITodoRepeatPlan {
-  id: number
+  id: BigInt
   createdAt: string
   updatedAt: string
   type: string
@@ -28,13 +28,13 @@ interface ITodoRepeatPlan {
 }
 
 interface ITodoStep {
-  id: number
+  id: BigInt
   createdAt: string
   updatedAt: string
   name: string
   done: boolean
   doneAt: string
-  todoID: number
+  todoID: BigInt
 }
 
 export interface IFixedTodo {
@@ -53,7 +53,7 @@ export interface ITodoSubmit {
   notified?: boolean
   notifyAt?: string
   doneAt?: string
-  todolistId: number
+  todolistId: BigInt
   todoRepeatPlan?: ITodoRepeatPlan
   steps?: ITodoStep[] | null
 }

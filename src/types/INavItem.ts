@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 
 export interface INavItemDTO {
-  id: number
+  id: BigInt
   name: string
   isLeaf: boolean
   count: number
@@ -27,7 +27,7 @@ export type ItemType =
 
 export const fixedMenuData = ref<INavItem[]>([
   {
-    id: 1,
+    id: 1n,
     name: '我的一天',
     isLeaf: true,
     count: 0,
@@ -36,7 +36,7 @@ export const fixedMenuData = ref<INavItem[]>([
     isChecked: true,
   },
   {
-    id: 2,
+    id: 2n,
     name: '重要',
     isLeaf: true,
     count: 0,
@@ -45,7 +45,7 @@ export const fixedMenuData = ref<INavItem[]>([
     isChecked: false,
   },
   {
-    id: 3,
+    id: 3n,
     name: '计划内',
     isLeaf: true,
     count: 0,
@@ -54,7 +54,7 @@ export const fixedMenuData = ref<INavItem[]>([
     isChecked: false,
   },
   {
-    id: 4,
+    id: 4n,
     name: '已分配给我',
     isLeaf: true,
     count: 0,
@@ -63,7 +63,7 @@ export const fixedMenuData = ref<INavItem[]>([
     isChecked: false,
   },
   {
-    id: 5,
+    id: 5n,
     name: '任务',
     isLeaf: true,
     count: 0,
