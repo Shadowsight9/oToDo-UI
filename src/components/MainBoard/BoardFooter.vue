@@ -35,9 +35,9 @@ const listArray = computed(() => {
 
 const listLmbMenu = reactive<IMenuProps>({
   data: listArray.value,
-  handler: (index: number, id?: number) => {
+  handler: (index: number, id?: BigInt) => {
     selectListTitle.value = listLmbMenu.data[index].text
-    selectListID.value = id || -1
+    selectListID.value = id || -1n
   },
 })
 

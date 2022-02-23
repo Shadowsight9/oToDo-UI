@@ -11,9 +11,9 @@ defineProps({
 })
 
 const emit =
-  defineEmits<{ (event: 'oclick', index: number, id?: number): void }>()
+  defineEmits<{ (event: 'oclick', index: number, id?: BigInt): void }>()
 
-const clickHandler = (index: number, id?: number) => {
+const clickHandler = (index: number, id?: BigInt) => {
   emit('oclick', index, id)
 }
 </script>

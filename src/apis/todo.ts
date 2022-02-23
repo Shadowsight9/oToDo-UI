@@ -58,7 +58,7 @@ export const getTodoById = async (id: number) => {
   return resopnse.data
 }
 
-export const getTodoByListId = async (id: number) => {
+export const getTodoByListId = async (id: BigInt) => {
   const resopnse: AxiosResponse<ITodo[]> = await http.get(
     '/todo-lists/' + id + '/todos'
   )
