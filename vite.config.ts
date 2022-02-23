@@ -3,6 +3,7 @@ import { loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import path from 'path'
+import legacy from '@vitejs/plugin-legacy'
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd()
@@ -45,6 +46,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         // 执行icon name的格式
         symbolId: 'icon-[dir]-[name]',
       }),
+      legacy({ targets: ['defaults', 'not IE 11'] }),
     ],
+    build: {
+      target: ['esnext'],
+    },
   }
 }
