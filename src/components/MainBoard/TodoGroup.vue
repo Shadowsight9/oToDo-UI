@@ -2,8 +2,9 @@
 import SvgIcon from '@/components/SvgIcon.vue'
 import TodoItem from '@/components/MainBoard/TodoItem.vue'
 import { ICompletedGroup, ITimeGroup, IListGroup } from '@/types/ITodoItem'
-import { PropType, ref } from 'vue'
-defineProps({
+import { computed, PropType, ref } from 'vue'
+import type { ITodo } from '@/types/ITodo'
+const props = defineProps({
   data: {
     type: Object as PropType<ICompletedGroup | ITimeGroup | IListGroup>,
     required: true,
@@ -14,6 +15,9 @@ const isExpand = ref(true)
 const clickHandler = () => {
   isExpand.value = !isExpand.value
 }
+
+// TODO[bug]: WORKAROUND, remove type assert
+const items = computed(() => props.data.itemArray as ITodo[])
 </script>
 <template>
   <li class="divider" @click="clickHandler">
@@ -31,7 +35,7 @@ const clickHandler = () => {
   </li>
 
   <TodoItem
-    v-for="(v, index) in data.itemArray"
+    v-for="(v, index) in items"
     v-show="isExpand"
     :key="index"
     :data="v"
