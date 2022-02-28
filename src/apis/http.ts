@@ -5,7 +5,8 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios'
-import jsonBigInt from 'json-bigint'
+// import jsonBigInt from 'json-bigint'
+import jsonBigInt from 'json-bigint-fix'
 
 const JSONBig = jsonBigInt({ useNativeBigInt: true })
 
@@ -18,6 +19,7 @@ export class Http {
       baseURL: '/api',
       timeout: 10000,
       transformResponse: [(data) => JSONBig.parse(data)],
+      transformRequest: [(data) => JSONBig.stringify(data)],
     })
 
     this.initInterceptors()
@@ -87,7 +89,7 @@ export class Http {
 
   private initInterceptors() {
     this.axiosInstance.defaults.headers.post['Content-Type'] =
-      'application/x-www-form-urlencoded'
+      'application/json'
 
     this.axiosInstance.interceptors.request.use(
       this.requestSuccess,

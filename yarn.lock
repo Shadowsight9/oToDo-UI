@@ -1720,10 +1720,10 @@ js-yaml@^4.1.0:
   dependencies:
     argparse "^2.0.1"
 
-json-bigint@^1.0.0:
+json-bigint-fix@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/json-bigint/-/json-bigint-1.0.0.tgz#ae547823ac0cad8398667f8cd9ef4730f5b01ff1"
-  integrity sha512-SiPv/8VpZuWbvLSMtTDU8hEfrZWg/mH/nV/b4o0CYbSxu1UIQPLdwKOCIyLQX+VIPO5vrLX3i8qtqFyhdPSUSQ==
+  resolved "https://registry.yarnpkg.com/json-bigint-fix/-/json-bigint-fix-1.0.0.tgz#12057bee60d7fc44ab0ad35c5c23c2c69a2e7c09"
+  integrity sha512-azZOVmu5f5fux2yspM7IjHIGy9q+3MqHkeUXUeWrmVp3ootCPn5u+QhyBBGjpICh1NlJn9usBC15ZXlL2ViPyg==
   dependencies:
     bignumber.js "^9.0.0"
 

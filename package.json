@@ -11,7 +11,7 @@
   "dependencies": {
     "@vitejs/plugin-legacy": "^1.7.1",
     "axios": "^0.25.0",
-    "json-bigint": "^1.0.0",
+    "json-bigint-fix": "^1.0.0",
     "jwt-decode": "^3.1.2",
     "pinia": "^2.0.10",
     "vue": "^3.2.25",
