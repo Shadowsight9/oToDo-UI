@@ -19,7 +19,14 @@ export class Http {
       baseURL: '/api',
       timeout: 10000,
       transformResponse: [(data) => JSONBig.parse(data)],
-      transformRequest: [(data) => JSONBig.stringify(data)],
+      transformRequest: [
+        (data, headers) => {
+          if (headers) {
+            headers['Content-Type'] = 'application/json'
+          }
+          return JSONBig.stringify(data)
+        },
+      ],
     })
 
     this.initInterceptors()
