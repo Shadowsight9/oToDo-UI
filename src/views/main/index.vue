@@ -18,14 +18,20 @@ function handleNavChange(navItem: INavItem) {
 }
 
 onMounted(async () => {
-  try {
-    s.setUser(await getCurrentUser())
-    s.setNavTree(await getCurrentMenu())
-    s.setTodoList(await getCurrentTodoList())
-    s.setFixedTodo(await getCurrentFixedTodos())
-  } catch (err) {
-    OpenMessage('请求服务器信息失败！', 2)
+  const f = async (fn: () => Promise<void>) => {
+    try {
+      await fn()
+    } catch (err) {
+      OpenMessage('请求服务器信息失败！', 2)
+    }
   }
+
+  await Promise.allSettled([
+    f(async () => s.setUser(await getCurrentUser())),
+    f(async () => s.setNavTree(await getCurrentMenu())),
+    f(async () => s.setTodoList(await getCurrentTodoList())),
+    f(async () => s.setFixedTodo(await getCurrentFixedTodos())),
+  ])
 })
 </script>
 <template>
