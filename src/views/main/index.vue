@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import NavMenu from '@/components/NavMenu.vue'
-import MainBoard from '@/components/MainBoard.vue'
+import NavMenu from '@/views/main/components/NavMenu.vue'
+import MainBoard from '@/views/main/components/MainBoard.vue'
 import { OpenMessage } from '@/utils/openComponents'
 import { getCurrentUser } from '@/apis/user'
 import { getCurrentMenu } from '@/apis/menu'

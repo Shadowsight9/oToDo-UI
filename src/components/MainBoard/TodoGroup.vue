@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import SvgIcon from '@/components/SvgIcon.vue'
-import TodoItem from '@/components/MainBoard/TodoItem.vue'
-import { ICompletedGroup, ITimeGroup, IListGroup } from '@/types/ITodoItem'
-import { computed, PropType, ref } from 'vue'
+import { computed, ref } from 'vue'
 import type { ITodo } from '@/types/ITodo'
-const props = defineProps({
-  data: {
-    type: Object as PropType<ICompletedGroup | ITimeGroup | IListGroup>,
-    required: true,
-  },
-})
+const props = defineProps<{
+  data: object
+}>()
 
 const isExpand = ref(true)
 const clickHandler = () => {
@@ -19,7 +13,7 @@ const clickHandler = () => {
 // TODO[bug]: WORKAROUND, remove type assert
 const items = computed(() => props.data.itemArray as ITodo[])
 </script>
-<template>
+<!-- <template>
   <li class="divider" @click="clickHandler">
     <SvgIcon class="icon arrow" name="down-arrow" />
     <template v-if="'listName' in data">
@@ -40,7 +34,7 @@ const items = computed(() => props.data.itemArray as ITodo[])
     :key="index"
     :data="v"
   />
-</template>
+</template> -->
 <style scoped lang="scss">
 @import '@/assets/styles/variables.module.scss';
 li.divider {

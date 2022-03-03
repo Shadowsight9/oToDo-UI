@@ -1,43 +1,19 @@
 <script setup lang="ts">
 import TodoItem from '@/components/MainBoard/TodoItem.vue'
-import TodoGroup from '@/components/MainBoard/TodoGroup.vue'
 import BoardFooter from '@/components/MainBoard/BoardFooter.vue'
 import BoardHeader from '@/components/MainBoard/BoardHeader.vue'
 import TodoDetail from '@/components/TodoDetail.vue'
 
-import { ref, onMounted, watch, toRef } from 'vue'
-import { ITodoItem, ITimeGroup, ITodoGroup } from '@/types/ITodoItem'
+import { ref, watch, toRef } from 'vue'
 import type { INavItem, ItemType } from '@/types/INavItem'
-import { addTodo, getCurrentDailyTodos } from '@/apis/todo'
+import { addTodo } from '@/apis/todo'
 import { getTodoByListId } from '@/apis/todo'
-import { ITodoList } from '@/types/ITodoList'
 import { ITodo, ITodoSubmit } from '@/types/ITodo'
 import { useDataStore } from '@/store/dataStore'
 import { OpenMessage } from '@/utils/openComponents'
 
 const s = useDataStore()
 const currentTodos = ref<ITodo[]>()
-
-const groupData = ref<ITimeGroup[]>([
-  {
-    id: 3n,
-    todoNum: 1,
-    isPrevious: true,
-    itemArray: [
-      {
-        id: 1n,
-        title: '时间列表',
-        isCompleted: false,
-        isImportant: false,
-        isInMyDay: false,
-        deadline: '',
-        isSync: true,
-        haveAttachment: true,
-        haveMemo: true,
-      },
-    ],
-  },
-])
 
 const props = defineProps<{
   todoList: INavItem
@@ -82,6 +58,10 @@ const submitHandler = (item: ITodoSubmit) => {
       OpenMessage('添加Todo失败')
     })
 }
+
+const updateHandler = () => {
+  fetchListData(props.todoList.id, props.todoList.type)
+}
 </script>
 <template>
   <div class="main-board">
@@ -97,6 +77,8 @@ const submitHandler = (item: ITodoSubmit) => {
             v-for="item in currentTodos"
             :key="item.id.toString()"
             :data="item"
+            :list-name="todoList.name"
+            @update="updateHandler"
           />
           <!-- <TodoGroup v-for="item in groupData" :key="item.id" :data="item" /> -->
         </ul>

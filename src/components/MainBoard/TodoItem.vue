@@ -1,13 +1,42 @@
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue'
-import { PropType } from 'vue'
 import { ITodo } from '@/types/ITodo'
-defineProps({
-  data: {
-    type: Object as PropType<ITodo>,
-    required: true,
-  },
-})
+import { putTodoById } from '@/apis/todo'
+import { OpenMessage } from '@/utils/openComponents'
+
+const props = defineProps<{
+  data: ITodo
+  listName: string
+}>()
+
+const emit = defineEmits<{
+  (e: 'update'): void
+}>()
+
+function doneHandler() {
+  putTodoById(props.data.id, { ...props.data, done: !props.data.done })
+    .then(() => {
+      emit('update')
+    })
+    .catch((err) => {
+      OpenMessage(err, 2)
+      throw err
+    })
+}
+
+function importanceHandler() {
+  putTodoById(props.data.id, {
+    ...props.data,
+    importance: !props.data.importance,
+  })
+    .then(() => {
+      emit('update')
+    })
+    .catch((err) => {
+      OpenMessage(err, 2)
+      throw err
+    })
+}
 </script>
 <template>
   <li class="todo-item">
@@ -15,6 +44,7 @@ defineProps({
       class="icon tick"
       :class="{ 'tick-completed': data.done }"
       name="check"
+      @click="doneHandler"
     />
     <div class="todo-info">
       <div class="todo-text" :class="{ 'todo-text-completed': data.done }">
@@ -26,16 +56,16 @@ defineProps({
           <span>我的一天</span>
           <span>•</span>
         </template>
-        <!-- <template v-if="data">
+        <template v-if="listName">
           <SvgIcon class="icon" name="list" />
-          <span>{{ data.belongList }}</span>
+          <span>{{ listName }}</span>
           <span>•</span>
-        </template> -->
-        <template v-if="data.deadline">
+        </template>
+        <!-- <template v-if="data.deadline">
           <SvgIcon class="icon calendar" name="calendar" />
           <span>{{ data.deadline }}</span>
           <span>•</span>
-        </template>
+        </template> -->
         <!-- <template v-if="data.isSync">
           <SvgIcon class="icon loop" name="loop" />
           <span>•</span>
@@ -51,8 +81,10 @@ defineProps({
       </div>
     </div>
 
-    <SvgIcon v-if="data.importance" class="icon" name="star-solid" />
-    <SvgIcon v-else class="icon" name="star" />
+    <div @click="importanceHandler">
+      <SvgIcon v-if="data.importance" class="icon" name="star-solid" />
+      <SvgIcon v-else class="icon" name="star" />
+    </div>
   </li>
 </template>
 <style scoped lang="scss">
