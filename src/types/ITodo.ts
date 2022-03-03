@@ -46,14 +46,16 @@ export interface IFixedTodo {
 }
 
 export interface ITodoSubmit {
-  title: string
+  title?: string
   memo?: string
   importance?: boolean
-  deadline?: string
+  deadline?: string | null
   notified?: boolean
-  notifyAt?: string
-  doneAt?: string
-  todolistId: BigInt
+  notifyAt?: string | null
+  done?: boolean
+  doneAt?: string | null
+  todolistId?: BigInt
+  todoRepeatFromID?: BigInt | null
   todoRepeatPlan?: ITodoRepeatPlan
   steps?: ITodoStep[] | null
 }
