@@ -1,5 +1,5 @@
 import { http } from '@/apis/http'
-import token from '@/utils/token'
+
 import { ILoginResponse } from '@/types/ISession'
 import { AxiosResponse } from 'axios'
 
@@ -8,7 +8,7 @@ enum Api {
   sessionTokenURL = '/sessions/current/tokens',
 }
 
-export const loginSession = async (userName: string, password: string) => {
+export async function loginSession(userName: string, password: string) {
   const resopnse: AxiosResponse<ILoginResponse> = await http.post(
     Api.SessionURL,
     {
@@ -21,27 +21,20 @@ export const loginSession = async (userName: string, password: string) => {
       },
     }
   )
-  const { accessToken, expiresIn, refreshToken } = resopnse.data
-
-  token.setAccessToken(accessToken, expiresIn)
-  if (typeof refreshToken == 'string') {
-    token.setRefreshToken(refreshToken)
-  }
+  return resopnse.data
 }
 
-export const refreshSession = async () => {
+export async function refreshSession() {
   const resopnse: AxiosResponse<ILoginResponse> = await http.post(
     Api.sessionTokenURL
   )
-  const { accessToken, expiresIn } = resopnse.data
-  token.setAccessToken(accessToken, expiresIn)
+  return resopnse.data
 }
 
-export const testSession = () => {
+export async function testSession() {
   return http.get(Api.SessionURL)
 }
 
-export const deleteSession = async () => {
+export async function deleteSession() {
   await http.delete(Api.SessionURL)
-  token.removeAllToken()
 }

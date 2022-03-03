@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { loginSession } from '@/apis/sessions'
+import { login } from '@/services/sessions'
 import { OpenMessage } from '@/utils/openComponents'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -32,7 +32,7 @@ const handleLogin = () => {
     return
   }
 
-  loginSession(form.username.val, form.password.val)
+  login(form.username.val, form.password.val)
     .then(() => router.push('/'))
     .catch((err) => {
       isLoading.value = false

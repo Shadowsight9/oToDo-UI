@@ -1,4 +1,4 @@
-import { testSession } from '@/apis/sessions'
+import { refresh } from '@/services/sessions'
 
 export class TokenTimer {
   private static instance: TokenTimer
@@ -22,6 +22,6 @@ export class TokenTimer {
 
   private test() {
     // TODO: 定时器没有捕获异常
-    testSession()
+    refresh()
   }
 }

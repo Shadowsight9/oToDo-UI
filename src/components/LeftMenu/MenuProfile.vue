@@ -3,10 +3,9 @@ import SvgIcon from '@/components/SvgIcon.vue'
 import { reactive, ref } from 'vue'
 import { useDataStore } from '@/store/dataStore'
 import { IMenuProps } from '@/types/IMouseMenu'
-import { deleteSession } from '@/apis/sessions'
+import { logout } from '@/services/sessions'
 import { useRouter } from 'vue-router'
 import { OpenMessage } from '@/utils/openComponents'
-import token from '@/utils/token'
 
 const dataStore = useDataStore()
 const router = useRouter()
@@ -14,9 +13,8 @@ const router = useRouter()
 const listLmbHandler = (index: number) => {
   switch (index) {
     case 0:
-      deleteSession()
+      logout()
         .then(() => {
-          token.removeAllToken()
           router.push({ name: 'login' })
         })
         .catch((err) => OpenMessage(err, 2))
