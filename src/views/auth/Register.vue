@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { register } from '@/apis/user'
+import { register } from '@/services/user'
 import { OpenMessage } from '@/utils/openComponents'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'

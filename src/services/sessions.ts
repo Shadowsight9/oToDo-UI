@@ -1,4 +1,4 @@
-import { loginSession, deleteSession, testSession } from '@/apis/sessions'
+import { loginSession, deleteSession, testSession } from '@/apis'
 import token from '@/utils/token'
 
 export async function login(userName: string, password: string) {
@@ -19,4 +19,12 @@ export async function refresh() {
 export async function logout() {
   await deleteSession()
   token.removeAllToken()
+}
+
+export function isLoggedIn() {
+  if (typeof token.getAccessToken() === 'string') {
+    return true
+  } else {
+    return false
+  }
 }
