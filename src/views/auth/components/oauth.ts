@@ -1,4 +1,4 @@
-import { getGithubOAuthRedirector, loginByGithubOAuth } from '@/apis/oauth'
+import { getGithubOAuthRedirector, loginViaGithub } from '@/services/auth'
 
 export async function goOAuthLogin() {
   try {
@@ -11,5 +11,5 @@ export async function goOAuthLogin() {
 }
 
 export function tryGithubOAuthLogin(code: string, state: string) {
-  return loginByGithubOAuth(code, state)
+  return loginViaGithub(code, state)
 }

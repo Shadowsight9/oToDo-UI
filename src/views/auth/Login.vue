@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { login } from '@/services/sessions'
+import { login } from '@/services/auth'
 import { OpenMessage } from '@/utils/openComponents'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'

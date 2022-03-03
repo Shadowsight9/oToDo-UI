@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { isLoggedIn } from '@/services/sessions'
+import { isLoggedIn } from '@/services/auth'
 import { TokenTimer } from '@/apis/timer/tokenTimer'
 
 import Main from '@/views/main/index.vue'

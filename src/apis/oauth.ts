@@ -1,5 +1,4 @@
 import { http } from '@/apis/http'
-import token from '@/utils/token'
 import type { OAuthRedirector } from '@/types/IOAuth'
 import type { ILoginResponse } from '@/types/ISession'
 
@@ -14,13 +13,5 @@ export const loginByGithubOAuth = async (code: string, state: string) => {
     { code, state },
     { headers: { needToken: false } }
   )
-
-  const { accessToken, expiresIn, refreshToken } =
-    response.data as ILoginResponse
-
-  // TODO[refactor]: do not handle biz logical here, this should only be related to api
-  token.setAccessToken(accessToken, expiresIn)
-  if (typeof refreshToken == 'string') {
-    token.setRefreshToken(refreshToken)
-  }
+  return response.data as ILoginResponse
 }

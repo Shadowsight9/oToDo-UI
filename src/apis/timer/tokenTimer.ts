@@ -1,4 +1,4 @@
-import { refresh } from '@/services/sessions'
+import { refresh } from '@/services/auth'
 
 export class TokenTimer {
   private static instance: TokenTimer

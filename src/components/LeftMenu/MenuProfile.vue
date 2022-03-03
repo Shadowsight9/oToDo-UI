@@ -3,7 +3,7 @@ import SvgIcon from '@/components/SvgIcon.vue'
 import { reactive, ref } from 'vue'
 import { useDataStore } from '@/store/dataStore'
 import { IMenuProps } from '@/types/IMouseMenu'
-import { logout } from '@/services/sessions'
+import { logout } from '@/services/auth'
 import { useRouter } from 'vue-router'
 import { OpenMessage } from '@/utils/openComponents'
 
