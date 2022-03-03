@@ -53,7 +53,7 @@ export const addTodo = async (data: ITodoSubmit) => {
   return http.post('/todos', data)
 }
 
-export const getTodoById = async (id: number) => {
+export const getTodoById = async (id: BigInt) => {
   const resopnse: AxiosResponse<ITodo> = await http.get('/todos/' + id)
   return resopnse.data
 }
@@ -65,16 +65,14 @@ export const getTodoByListId = async (id: BigInt) => {
   return resopnse.data
 }
 
-// TODO 请传递完整字段
-export const putTodoById = (id: number) => {
-  return http.put('/todos/' + id, {})
+export const putTodoById = (id: BigInt, data: ITodo) => {
+  return http.put('/todos/' + id, data)
 }
 
-// TODO 请传递完整字段
-export const patchTodoById = (id: number) => {
-  return http.patch('/todos/' + id, {})
+export const patchTodoById = (id: BigInt, data: ITodoSubmit) => {
+  return http.patch('/todos/' + id, data)
 }
 
-export const deleleTodoById = async (id: number) => {
+export const deleleTodoById = async (id: BigInt) => {
   return http.delete('/todos/' + id)
 }
