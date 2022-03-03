@@ -2,7 +2,7 @@ import { testSession } from '@/apis/sessions'
 
 export class TokenTimer {
   private static instance: TokenTimer
-  private static intervel = 2000
+  private static intervel = 100000
   private intervelId = 0
 
   public static getInstance() {
