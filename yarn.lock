@@ -99,11 +99,6 @@
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
   integrity sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==
 
-"@types/json-bigint@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@types/json-bigint/-/json-bigint-1.0.1.tgz#201062a6990119a8cc18023cfe1fed12fc2fc8a7"
-  integrity sha512-zpchZLNsNuzJHi6v64UBoFWAvQlPhch7XAi36FkH6tL1bbbmimIF+cS7vwkzY4u5RaSWMoflQfu+TshMPPw8uw==
-
 "@types/json-schema@^7.0.9":
   version "7.0.9"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
@@ -1720,10 +1715,10 @@ js-yaml@^4.1.0:
   dependencies:
     argparse "^2.0.1"
 
-json-bigint-fix@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/json-bigint-fix/-/json-bigint-fix-1.0.0.tgz#12057bee60d7fc44ab0ad35c5c23c2c69a2e7c09"
-  integrity sha512-azZOVmu5f5fux2yspM7IjHIGy9q+3MqHkeUXUeWrmVp3ootCPn5u+QhyBBGjpICh1NlJn9usBC15ZXlL2ViPyg==
+json-bigint-fix@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/json-bigint-fix/-/json-bigint-fix-1.0.3.tgz#27f437efc146b5d50c0ee2e203b94fd3ad9136e8"
+  integrity sha512-TFqjZuxg7pMdD6mSY6UMvoESMwvOkwZ2LnitfWuu4tiNyD/sJl/AP9nZ6ZXDVrEkzE/LLhAqL8U71izKjzxdpA==
   dependencies:
     bignumber.js "^9.0.0"
 
